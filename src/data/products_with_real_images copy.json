@@ -1,13 +1,22 @@
 [
   {
     "name": "Product 1",
-    "colors": ["Red", "Green", "White"],
+    "colors": [
+      "Red",
+      "Green",
+      "White"
+    ],
     "img_for_each_color": {
       "Red": "p4.jpg",
       "Green": "p4.jpg",
       "White": "p4.jpg"
     },
-    "size": ["S", "M", "L", "XL"],
+    "size": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
     "price_for_each_size": {
       "S": 29.93,
       "M": 31.93,
@@ -37,17 +46,29 @@
       }
     },
     "description": "Designed for durability and comfort.",
-    "images": ["p4.jpg", "p4.jpg"]
+    "images": [
+      "p4.jpg",
+      "p4.jpg"
+    ]
   },
   {
     "name": "Product 2",
-    "colors": ["Black", "Blue", "White"],
+    "colors": [
+      "Black",
+      "Blue",
+      "White"
+    ],
     "img_for_each_color": {
       "Black": "p4.jpg",
       "Blue": "p4.jpg",
       "White": "p4.jpg"
     },
-    "size": ["S", "M", "L", "XL"],
+    "size": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
     "price_for_each_size": {
       "S": 25.48,
       "M": 27.48,
@@ -77,17 +98,29 @@
       }
     },
     "description": "Perfect for casual and formal occasions.",
-    "images": ["p4.jpg", "p4.jpg"]
+    "images": [
+      "p4.jpg",
+      "p4.jpg"
+    ]
   },
   {
     "name": "Product 3",
-    "colors": ["Black", "Red", "Green"],
+    "colors": [
+      "Black",
+      "Red",
+      "Green"
+    ],
     "img_for_each_color": {
       "Black": "p4.jpg",
       "Red": "p4.jpg",
       "Green": "p4.jpg"
     },
-    "size": ["S", "M", "L", "XL"],
+    "size": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
     "price_for_each_size": {
       "S": 18.19,
       "M": 20.19,
@@ -117,17 +150,29 @@
       }
     },
     "description": "A comfortable and stylish choice.",
-    "images": ["p4.jpg", "p4.jpg"]
+    "images": [
+      "p4.jpg",
+      "p4.jpg"
+    ]
   },
   {
     "name": "Product 4",
-    "colors": ["White", "Black", "Green"],
+    "colors": [
+      "White",
+      "Black",
+      "Green"
+    ],
     "img_for_each_color": {
       "White": "p4.jpg",
       "Black": "p4.jpg",
       "Green": "p4.jpg"
     },
-    "size": ["S", "M", "L", "XL"],
+    "size": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
     "price_for_each_size": {
       "S": 16.25,
       "M": 18.25,
@@ -157,17 +202,29 @@
       }
     },
     "description": "Made from premium materials.",
-    "images": ["p4.jpg", "p4.jpg"]
+    "images": [
+      "p4.jpg",
+      "p4.jpg"
+    ]
   },
   {
     "name": "Product 5",
-    "colors": ["White", "Blue", "Black"],
+    "colors": [
+      "White",
+      "Blue",
+      "Black"
+    ],
     "img_for_each_color": {
       "White": "p4.jpg",
       "Blue": "p4.jpg",
       "Black": "p4.jpg"
     },
-    "size": ["S", "M", "L", "XL"],
+    "size": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
     "price_for_each_size": {
       "S": 32.23,
       "M": 34.23,
@@ -197,17 +254,29 @@
       }
     },
     "description": "A must-have for your wardrobe.",
-    "images": ["p4.jpg", "p4.jpg"]
+    "images": [
+      "p4.jpg",
+      "p4.jpg"
+    ]
   },
   {
     "name": "Product 6",
-    "colors": ["White", "Red", "Green"],
+    "colors": [
+      "White",
+      "Red",
+      "Green"
+    ],
     "img_for_each_color": {
       "White": "p4.jpg",
       "Red": "p4.jpg",
       "Green": "p4.jpg"
     },
-    "size": ["S", "M", "L", "XL"],
+    "size": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
     "price_for_each_size": {
       "S": 16.37,
       "M": 18.37,
@@ -237,17 +306,29 @@
       }
     },
     "description": "A comfortable and stylish choice.",
-    "images": ["p4.jpg", "p4.jpg"]
+    "images": [
+      "p4.jpg",
+      "p4.jpg"
+    ]
   },
   {
     "name": "Product 7",
-    "colors": ["White", "Red", "Blue"],
+    "colors": [
+      "White",
+      "Red",
+      "Blue"
+    ],
     "img_for_each_color": {
       "White": "p4.jpg",
       "Red": "p4.jpg",
       "Blue": "p4.jpg"
     },
-    "size": ["S", "M", "L", "XL"],
+    "size": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
     "price_for_each_size": {
       "S": 17.36,
       "M": 19.36,
@@ -277,17 +358,29 @@
       }
     },
     "description": "Designed for durability and comfort.",
-    "images": ["p4.jpg", "p4.jpg"]
+    "images": [
+      "p4.jpg",
+      "p4.jpg"
+    ]
   },
   {
     "name": "Product 8",
-    "colors": ["Blue", "Red", "Black"],
+    "colors": [
+      "Blue",
+      "Red",
+      "Black"
+    ],
     "img_for_each_color": {
       "Blue": "p4.jpg",
       "Red": "p4.jpg",
       "Black": "p4.jpg"
     },
-    "size": ["S", "M", "L", "XL"],
+    "size": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
     "price_for_each_size": {
       "S": 17.7,
       "M": 19.7,
@@ -317,17 +410,29 @@
       }
     },
     "description": "Made from premium materials.",
-    "images": ["p4.jpg", "p4.jpg"]
+    "images": [
+      "p4.jpg",
+      "p4.jpg"
+    ]
   },
   {
     "name": "Product 9",
-    "colors": ["Red", "Black", "White"],
+    "colors": [
+      "Red",
+      "Black",
+      "White"
+    ],
     "img_for_each_color": {
       "Red": "p4.jpg",
       "Black": "p4.jpg",
       "White": "p4.jpg"
     },
-    "size": ["S", "M", "L", "XL"],
+    "size": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
     "price_for_each_size": {
       "S": 25.87,
       "M": 27.87,
@@ -357,17 +462,29 @@
       }
     },
     "description": "Made from premium materials.",
-    "images": ["p4.jpg", "p4.jpg"]
+    "images": [
+      "p4.jpg",
+      "p4.jpg"
+    ]
   },
   {
     "name": "Product 10",
-    "colors": ["Black", "Blue", "White"],
+    "colors": [
+      "Black",
+      "Blue",
+      "White"
+    ],
     "img_for_each_color": {
       "Black": "p4.jpg",
       "Blue": "p4.jpg",
       "White": "p4.jpg"
     },
-    "size": ["S", "M", "L", "XL"],
+    "size": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
     "price_for_each_size": {
       "S": 18.16,
       "M": 20.16,
@@ -397,17 +514,29 @@
       }
     },
     "description": "Made from premium materials.",
-    "images": ["p4.jpg", "p4.jpg"]
+    "images": [
+      "p4.jpg",
+      "p4.jpg"
+    ]
   },
   {
     "name": "Product 11",
-    "colors": ["White", "Green", "Red"],
+    "colors": [
+      "White",
+      "Green",
+      "Red"
+    ],
     "img_for_each_color": {
       "White": "p4.jpg",
       "Green": "p4.jpg",
       "Red": "p4.jpg"
     },
-    "size": ["S", "M", "L", "XL"],
+    "size": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
     "price_for_each_size": {
       "S": 29.33,
       "M": 31.33,
@@ -437,17 +566,29 @@
       }
     },
     "description": "Perfect for casual and formal occasions.",
-    "images": ["p4.jpg", "p4.jpg"]
+    "images": [
+      "p4.jpg",
+      "p4.jpg"
+    ]
   },
   {
     "name": "Product 12",
-    "colors": ["White", "Green", "Blue"],
+    "colors": [
+      "White",
+      "Green",
+      "Blue"
+    ],
     "img_for_each_color": {
       "White": "p4.jpg",
       "Green": "p4.jpg",
       "Blue": "p4.jpg"
     },
-    "size": ["S", "M", "L", "XL"],
+    "size": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
     "price_for_each_size": {
       "S": 15.56,
       "M": 17.56,
@@ -477,17 +618,29 @@
       }
     },
     "description": "A must-have for your wardrobe.",
-    "images": ["p4.jpg", "p4.jpg"]
+    "images": [
+      "p4.jpg",
+      "p4.jpg"
+    ]
   },
   {
     "name": "Product 13",
-    "colors": ["Blue", "Red", "Black"],
+    "colors": [
+      "Blue",
+      "Red",
+      "Black"
+    ],
     "img_for_each_color": {
       "Blue": "p4.jpg",
       "Red": "p4.jpg",
       "Black": "p4.jpg"
     },
-    "size": ["S", "M", "L", "XL"],
+    "size": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
     "price_for_each_size": {
       "S": 22.27,
       "M": 24.27,
@@ -517,17 +670,29 @@
       }
     },
     "description": "A comfortable and stylish choice.",
-    "images": ["p4.jpg", "p4.jpg"]
+    "images": [
+      "p4.jpg",
+      "p4.jpg"
+    ]
   },
   {
     "name": "Product 14",
-    "colors": ["Black", "Red", "White"],
+    "colors": [
+      "Black",
+      "Red",
+      "White"
+    ],
     "img_for_each_color": {
       "Black": "p4.jpg",
       "Red": "p4.jpg",
       "White": "p4.jpg"
     },
-    "size": ["S", "M", "L", "XL"],
+    "size": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
     "price_for_each_size": {
       "S": 33.47,
       "M": 35.47,
@@ -557,17 +722,29 @@
       }
     },
     "description": "A must-have for your wardrobe.",
-    "images": ["p4.jpg", "p4.jpg"]
+    "images": [
+      "p4.jpg",
+      "p4.jpg"
+    ]
   },
   {
     "name": "Product 15",
-    "colors": ["White", "Red", "Green"],
+    "colors": [
+      "White",
+      "Red",
+      "Green"
+    ],
     "img_for_each_color": {
       "White": "p4.jpg",
       "Red": "p4.jpg",
       "Green": "p4.jpg"
     },
-    "size": ["S", "M", "L", "XL"],
+    "size": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
     "price_for_each_size": {
       "S": 23.58,
       "M": 25.58,
@@ -597,17 +774,29 @@
       }
     },
     "description": "A comfortable and stylish choice.",
-    "images": ["p4.jpg", "p4.jpg"]
+    "images": [
+      "p4.jpg",
+      "p4.jpg"
+    ]
   },
   {
     "name": "Product 16",
-    "colors": ["Red", "Black", "White"],
+    "colors": [
+      "Red",
+      "Black",
+      "White"
+    ],
     "img_for_each_color": {
       "Red": "p4.jpg",
       "Black": "p4.jpg",
       "White": "p4.jpg"
     },
-    "size": ["S", "M", "L", "XL"],
+    "size": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
     "price_for_each_size": {
       "S": 30.65,
       "M": 32.65,
@@ -637,17 +826,29 @@
       }
     },
     "description": "Perfect for casual and formal occasions.",
-    "images": ["p4.jpg", "p4.jpg"]
+    "images": [
+      "p4.jpg",
+      "p4.jpg"
+    ]
   },
   {
     "name": "Product 17",
-    "colors": ["White", "Green", "Black"],
+    "colors": [
+      "White",
+      "Green",
+      "Black"
+    ],
     "img_for_each_color": {
       "White": "p4.jpg",
       "Green": "p4.jpg",
       "Black": "p4.jpg"
     },
-    "size": ["S", "M", "L", "XL"],
+    "size": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
     "price_for_each_size": {
       "S": 25.63,
       "M": 27.63,
@@ -677,17 +878,29 @@
       }
     },
     "description": "Made from premium materials.",
-    "images": ["p4.jpg", "p4.jpg"]
+    "images": [
+      "p4.jpg",
+      "p4.jpg"
+    ]
   },
   {
     "name": "Product 18",
-    "colors": ["Green", "White", "Black"],
+    "colors": [
+      "Green",
+      "White",
+      "Black"
+    ],
     "img_for_each_color": {
       "Green": "p4.jpg",
       "White": "p4.jpg",
       "Black": "p4.jpg"
     },
-    "size": ["S", "M", "L", "XL"],
+    "size": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
     "price_for_each_size": {
       "S": 20.04,
       "M": 22.04,
@@ -717,17 +930,29 @@
       }
     },
     "description": "Made from premium materials.",
-    "images": ["p4.jpg", "p4.jpg"]
+    "images": [
+      "p4.jpg",
+      "p4.jpg"
+    ]
   },
   {
     "name": "Product 19",
-    "colors": ["Green", "Black", "Blue"],
+    "colors": [
+      "Green",
+      "Black",
+      "Blue"
+    ],
     "img_for_each_color": {
       "Green": "p4.jpg",
       "Black": "p4.jpg",
       "Blue": "p4.jpg"
     },
-    "size": ["S", "M", "L", "XL"],
+    "size": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
     "price_for_each_size": {
       "S": 32.52,
       "M": 34.52,
@@ -757,17 +982,29 @@
       }
     },
     "description": "A must-have for your wardrobe.",
-    "images": ["p4.jpg", "p4.jpg"]
+    "images": [
+      "p4.jpg",
+      "p4.jpg"
+    ]
   },
   {
     "name": "Product 20",
-    "colors": ["Black", "Red", "Blue"],
+    "colors": [
+      "Black",
+      "Red",
+      "Blue"
+    ],
     "img_for_each_color": {
       "Black": "p4.jpg",
       "Red": "p4.jpg",
       "Blue": "p4.jpg"
     },
-    "size": ["S", "M", "L", "XL"],
+    "size": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
     "price_for_each_size": {
       "S": 20.26,
       "M": 22.26,
@@ -797,17 +1034,29 @@
       }
     },
     "description": "A must-have for your wardrobe.",
-    "images": ["p4.jpg", "p4.jpg"]
+    "images": [
+      "p4.jpg",
+      "p4.jpg"
+    ]
   },
   {
     "name": "Product 21",
-    "colors": ["Red", "Green", "White"],
+    "colors": [
+      "Red",
+      "Green",
+      "White"
+    ],
     "img_for_each_color": {
       "Red": "p4.jpg",
       "Green": "p4.jpg",
       "White": "p4.jpg"
     },
-    "size": ["S", "M", "L", "XL"],
+    "size": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
     "price_for_each_size": {
       "S": 22.85,
       "M": 24.85,
@@ -837,17 +1086,29 @@
       }
     },
     "description": "Designed for durability and comfort.",
-    "images": ["p4.jpg", "p4.jpg"]
+    "images": [
+      "p4.jpg",
+      "p4.jpg"
+    ]
   },
   {
     "name": "Product 22",
-    "colors": ["Green", "Black", "Red"],
+    "colors": [
+      "Green",
+      "Black",
+      "Red"
+    ],
     "img_for_each_color": {
       "Green": "p4.jpg",
       "Black": "p4.jpg",
       "Red": "p4.jpg"
     },
-    "size": ["S", "M", "L", "XL"],
+    "size": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
     "price_for_each_size": {
       "S": 21.04,
       "M": 23.04,
@@ -877,17 +1138,29 @@
       }
     },
     "description": "Perfect for casual and formal occasions.",
-    "images": ["p4.jpg", "p4.jpg"]
+    "images": [
+      "p4.jpg",
+      "p4.jpg"
+    ]
   },
   {
     "name": "Product 23",
-    "colors": ["Blue", "Black", "Green"],
+    "colors": [
+      "Blue",
+      "Black",
+      "Green"
+    ],
     "img_for_each_color": {
       "Blue": "p4.jpg",
       "Black": "p4.jpg",
       "Green": "p4.jpg"
     },
-    "size": ["S", "M", "L", "XL"],
+    "size": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
     "price_for_each_size": {
       "S": 18.85,
       "M": 20.85,
@@ -917,17 +1190,29 @@
       }
     },
     "description": "Made from premium materials.",
-    "images": ["p4.jpg", "p4.jpg"]
+    "images": [
+      "p4.jpg",
+      "p4.jpg"
+    ]
   },
   {
     "name": "Product 24",
-    "colors": ["White", "Green", "Red"],
+    "colors": [
+      "White",
+      "Green",
+      "Red"
+    ],
     "img_for_each_color": {
       "White": "p4.jpg",
       "Green": "p4.jpg",
       "Red": "p4.jpg"
     },
-    "size": ["S", "M", "L", "XL"],
+    "size": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
     "price_for_each_size": {
       "S": 20.82,
       "M": 22.82,
@@ -957,17 +1242,29 @@
       }
     },
     "description": "A must-have for your wardrobe.",
-    "images": ["p4.jpg", "p4.jpg"]
+    "images": [
+      "p4.jpg",
+      "p4.jpg"
+    ]
   },
   {
     "name": "Product 25",
-    "colors": ["Red", "Green", "Blue"],
+    "colors": [
+      "Red",
+      "Green",
+      "Blue"
+    ],
     "img_for_each_color": {
       "Red": "p4.jpg",
       "Green": "p4.jpg",
       "Blue": "p4.jpg"
     },
-    "size": ["S", "M", "L", "XL"],
+    "size": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
     "price_for_each_size": {
       "S": 33.16,
       "M": 35.16,
@@ -997,17 +1294,29 @@
       }
     },
     "description": "A must-have for your wardrobe.",
-    "images": ["p4.jpg", "p4.jpg"]
+    "images": [
+      "p4.jpg",
+      "p4.jpg"
+    ]
   },
   {
     "name": "Product 26",
-    "colors": ["Black", "Red", "White"],
+    "colors": [
+      "Black",
+      "Red",
+      "White"
+    ],
     "img_for_each_color": {
       "Black": "p4.jpg",
       "Red": "p4.jpg",
       "White": "p4.jpg"
     },
-    "size": ["S", "M", "L", "XL"],
+    "size": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
     "price_for_each_size": {
       "S": 31.0,
       "M": 33.0,
@@ -1037,17 +1346,29 @@
       }
     },
     "description": "Perfect for casual and formal occasions.",
-    "images": ["p4.jpg", "p4.jpg"]
+    "images": [
+      "p4.jpg",
+      "p4.jpg"
+    ]
   },
   {
     "name": "Product 27",
-    "colors": ["White", "Blue", "Green"],
+    "colors": [
+      "White",
+      "Blue",
+      "Green"
+    ],
     "img_for_each_color": {
       "White": "p4.jpg",
       "Blue": "p4.jpg",
       "Green": "p4.jpg"
     },
-    "size": ["S", "M", "L", "XL"],
+    "size": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
     "price_for_each_size": {
       "S": 30.39,
       "M": 32.39,
@@ -1077,17 +1398,29 @@
       }
     },
     "description": "Designed for durability and comfort.",
-    "images": ["p4.jpg", "p4.jpg"]
+    "images": [
+      "p4.jpg",
+      "p4.jpg"
+    ]
   },
   {
     "name": "Product 28",
-    "colors": ["White", "Blue", "Red"],
+    "colors": [
+      "White",
+      "Blue",
+      "Red"
+    ],
     "img_for_each_color": {
       "White": "p4.jpg",
       "Blue": "p4.jpg",
       "Red": "p4.jpg"
     },
-    "size": ["S", "M", "L", "XL"],
+    "size": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
     "price_for_each_size": {
       "S": 32.91,
       "M": 34.91,
@@ -1117,17 +1450,29 @@
       }
     },
     "description": "A comfortable and stylish choice.",
-    "images": ["p4.jpg", "p4.jpg"]
+    "images": [
+      "p4.jpg",
+      "p4.jpg"
+    ]
   },
   {
     "name": "Product 29",
-    "colors": ["Blue", "Black", "Red"],
+    "colors": [
+      "Blue",
+      "Black",
+      "Red"
+    ],
     "img_for_each_color": {
       "Blue": "p4.jpg",
       "Black": "p4.jpg",
       "Red": "p4.jpg"
     },
-    "size": ["S", "M", "L", "XL"],
+    "size": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
     "price_for_each_size": {
       "S": 23.1,
       "M": 25.1,
@@ -1157,17 +1502,29 @@
       }
     },
     "description": "Perfect for casual and formal occasions.",
-    "images": ["p4.jpg", "p4.jpg"]
+    "images": [
+      "p4.jpg",
+      "p4.jpg"
+    ]
   },
   {
     "name": "Product 30",
-    "colors": ["White", "Blue", "Red"],
+    "colors": [
+      "White",
+      "Blue",
+      "Red"
+    ],
     "img_for_each_color": {
       "White": "p4.jpg",
       "Blue": "p4.jpg",
       "Red": "p4.jpg"
     },
-    "size": ["S", "M", "L", "XL"],
+    "size": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
     "price_for_each_size": {
       "S": 19.71,
       "M": 21.71,
@@ -1197,6 +1554,9 @@
       }
     },
     "description": "Perfect for casual and formal occasions.",
-    "images": ["p4.jpg", "p4.jpg"]
+    "images": [
+      "p4.jpg",
+      "p4.jpg"
+    ]
   }
 ]

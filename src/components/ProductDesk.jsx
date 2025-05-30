@@ -3,72 +3,51 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { useCart } from "@/contexts/CartContext";
 
 export default function ProductDesk({ item }) {
-    const { removeItem, changeQty } = useCart();
+  const { removeItem, changeQty } = useCart();
 
-    return (
-        <div className="flex flex-row justify-between p-[13px] border-b border-gray-100">
-            <div className="flex flex-col justify-between items-center">
-                <DeleteForeverIcon
-                    onClick={() => removeItem(item.id)}
-                    style={{ color: "#FF3737", cursor: "pointer" }}
-                />
-                <input
-                    type="number"
-                    min={1}
-                    value={item.qty}
-                    onChange={(e) => changeQty(item.id, +e.target.value)}
-                    className="w-12 text-center font-Lato text-gray-700 text-[14px] px-[4px] py-[2px] rounded-lg border border-gray-400"
-                />
-            </div>
-            <div className="flex flex-col justify-between items-end flex-1 mr-2">
-                <span className="font-Lato  text-right text-[12px] w-[140px] text-[#535353] overflow-hidden text-ellipsis whitespace-nowrap">
-                    {item.name}
-                </span>
-                <div className="flex flex-row-reverse items-center gap-[4px]">
-                    <span className="font-Lato text-[16px] text-[#0095FF] mr-[4px]">
-                        {(item.price || 0).toFixed(2)}
-                    </span>
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="10"
-                        height="11"
-                        viewBox="0 0 10 11"
-                        fill="none"
-                        className="inline-block"
-                    >
-                        <g clipPath="url(#clip0_1935_3530)">
-                            <path
-                                d="M8.57675 9.06082V1.33717C8.56766 1.23107 8.56766 1.1244 8.57675 1.0183C8.61315 0.848687 8.71369 0.699663 8.85738 0.6023C9.00108 0.504937 9.17685 0.466756 9.34803 0.495718C9.51208 0.500074 9.66834 0.566539 9.78519 0.681648C9.90205 0.796758 9.97078 0.951913 9.97746 1.11573C9.98188 1.18652 9.98188 1.25753 9.97746 1.32832V9.65426C9.98188 9.7221 9.98188 9.79016 9.97746 9.85799C9.97746 9.94058 9.96118 10.0223 9.92955 10.0986C9.89792 10.1749 9.85156 10.2443 9.79311 10.3027C9.73466 10.3611 9.66527 10.4074 9.58891 10.439C9.51254 10.4706 9.43069 10.4869 9.34803 10.4869H6.32498C5.40092 10.4511 4.52525 10.0647 3.87631 9.40646C3.22736 8.74822 2.85394 7.86759 2.83208 6.9439C2.83208 5.97845 2.83208 5.013 2.83208 4.04754C2.81962 3.87784 2.87371 3.70994 2.9829 3.57936C3.09209 3.44878 3.24782 3.36574 3.41718 3.3478C3.58372 3.31112 3.75798 3.33806 3.90564 3.4233C4.0533 3.50854 4.16369 3.64592 4.21506 3.80839C4.24769 3.92054 4.26265 4.03708 4.25939 4.15383C4.25939 5.03957 4.25939 5.92531 4.25939 6.81105C4.25938 7.10259 4.317 7.39126 4.42894 7.6605C4.54087 7.92973 4.70491 8.17423 4.91166 8.37997C5.1184 8.58571 5.36377 8.74863 5.63369 8.85939C5.90361 8.97015 6.19276 9.02656 6.48456 9.0254C7.11399 9.0254 7.74342 9.0254 8.37286 9.0254L8.57675 9.06082Z"
-                                fill="#0095FF"
-                            />
-                            <path
-                                d="M1.42268 1.93057V9.65421C1.43585 9.76009 1.43585 9.8672 1.42268 9.97308C1.3864 10.144 1.28418 10.2938 1.13815 10.3899C0.992131 10.4861 0.814068 10.5209 0.642541 10.4868C0.480927 10.4801 0.327879 10.4124 0.214328 10.2973C0.100778 10.1822 0.0351924 10.0283 0.0308373 9.86679C0.0264234 9.796 0.0264234 9.725 0.0308373 9.65421V1.1334C0.0353163 0.965675 0.104002 0.80605 0.222749 0.687408C0.341496 0.568766 0.501262 0.500142 0.669136 0.495667H1.66205C2.29148 0.495667 2.92091 0.495667 3.55034 0.495667C4.39762 0.504873 5.2152 0.808833 5.86241 1.35524C6.50962 1.90165 6.94599 2.65634 7.09644 3.48947C7.12474 3.67118 7.13956 3.85473 7.14077 4.03862C7.14077 4.99522 7.14077 5.94297 7.14077 6.89957C7.1526 7.01804 7.13359 7.13756 7.08558 7.24652C7.03757 7.35549 6.96219 7.45021 6.86676 7.52151C6.77132 7.5928 6.65906 7.63824 6.54087 7.65342C6.42268 7.6686 6.30257 7.65301 6.19218 7.60815C6.04002 7.56501 5.90822 7.46907 5.82048 7.33758C5.73274 7.20608 5.6948 7.04764 5.71346 6.89071V4.82693C5.71346 4.46378 5.71346 4.10062 5.71346 3.74633C5.63464 3.2798 5.40291 2.85266 5.0547 2.53201C4.70648 2.21135 4.26151 2.01537 3.7897 1.97485C2.99183 1.91285 2.22055 1.93057 1.42268 1.93057Z"
-                                fill="#0095FF"
-                            />
-                        </g>
-                        <defs>
-                            <clipPath id="clip0_1935_3530">
-                                <rect
-                                    width="10.0089"
-                                    height="10.0089"
-                                    fill="white"
-                                    transform="translate(-0.0045166 0.486816)"
-                                />
-                            </clipPath>
-                        </defs>
-                    </svg>
-                </div>
-                <img
-                    src="product.png"
-                    className="w-8 h-8 pr-1 self-end"
-                    alt=""
-                />
-            </div>
-            <img
-                src={item.image || "/product.png"}
-                className="w-20 h-20"
-                alt=""
-            />
+  const handleQtyChange = (e) => {
+    const value = parseInt(e.target.value, 10);
+    if (!isNaN(value) && value >= 1) {
+      changeQty(item.id, value);
+    }
+  };
+
+  return (
+    <div className="flex justify-between items-center p-3 border-b border-gray-100">
+      {/* أيقونة الحذف والكمية على أقصى اليسار */}
+      <div className="flex flex-col items-center gap-3">
+        <DeleteForeverIcon
+          onClick={() => removeItem(item.id)}
+          style={{ color: "#FF3737", cursor: "pointer", fontSize: 30 }}
+        />
+        <input
+          type="number"
+          min={1}
+          value={item.qty}
+          onChange={handleQtyChange}
+          className="w-14 text-center font-Lato text-gray-700 text-[14px] px-2 py-1 rounded-lg border border-gray-400"
+        />
+      </div>
+
+      {/* الصورة + الاسم والسعر جنب بعض - الصورة أقصى اليمين */}
+      <div className="flex items-center gap-3 flex-row-reverse max-w-[300px]">
+        {item.image && (
+          <img
+            src={item.image}
+            alt={item.name}
+            className="w-20 h-20 object-cover rounded-md"
+          />
+        )}
+
+        <div className="flex flex-col text-right">
+          <span className="font-Lato text-[14px] text-[#535353] truncate max-w-[180px]">
+            {item.name}
+          </span>
+          <span className="font-Lato text-[18px] text-[#0095FF] mt-1">
+            {(item.price || 0).toFixed(2)}
+          </span>
         </div>
-    );
+      </div>
+    </div>
+  );
 }
