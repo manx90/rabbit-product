@@ -252,7 +252,7 @@ function Description({
 						<span className="mt-3 mb-2 text-[#535353] text-right max-w-[450px]">
 							يرجى اختيار القياس
 						</span>
-						<fieldset className="flex flex-row gap-3 items-center border-0 p-0 m-0">
+						<fieldset className="flex flex-row flex-wrap gap-3 items-center border-0 p-0 m-0">
 							<legend className="sr-only">
 								اختر القياس
 							</legend>
@@ -447,7 +447,7 @@ function Description({
 					<img
 						src={product.imgSizeChart}
 						alt=""
-						className="mx-auto max-w-[450px] max-h-[450px] lg:max-w-[550px] lg:max-h-[550px] "
+						className="mx-auto max-w-[450px] max-h-[450px] lg:max-w-[400px] lg:max-h-[550px] "
 					/>
 					<img
 						src={product.imgMeasure}
