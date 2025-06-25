@@ -1,6 +1,6 @@
 [
   {
-    "name": "Product 1",
+    "name": "منتج 1",
     "colors": ["Red", "Green", "White"],
     "img_for_each_color": {
       "Red": "p4.jpg",

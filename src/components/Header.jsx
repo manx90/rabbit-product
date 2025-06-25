@@ -7,18 +7,21 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useCart } from "@/contexts/CartContext";
+import SearchBox from "./searchBox";
+import Darkmode from "./Darkmode"
 
 export default function Header() {
   const [Menubar, setMenubar] = useState(false);
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 bg-white flex flex-col">
-      <div className="flex align-center justify-between p-[16px] border-b border-[#D9D9D9]">
+    <div className="bg-white flex flex-col">
+      <div className="flex align-center justify-between  p-[16px] lg:px-[240px] py-[24px] border-b border-[#D9D9D9]">
         <div className="flex items-center justify-center gap-[12px]">
           <Link to="/Desk">
             <IconButtonWithBadge />
           </Link>
+          <SearchBox />
           <svg
-            className="align-center "
+            className="align-center lg:hidden"
             width="24"
             height="24"
             viewBox="0 0 24 24"
@@ -45,10 +48,10 @@ export default function Header() {
           </svg>
         </div>
         <Link to="/">
-          <img src="/mainlogo.png" alt="Rabbit Products Logo" />
+          <img src="/mainlogo.png" alt="Rabbit Products Logo" className="lg:mr-20 lg:w-42" />
         </Link>
         <div className="flex items-center justify-center gap-[12px]">
-          <svg
+          {/* <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -72,7 +75,8 @@ export default function Header() {
                 fill="#535353"
               />
             </g>
-          </svg>
+          </svg> */}
+          <Darkmode/>
           {!Menubar ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -81,6 +85,7 @@ export default function Header() {
               viewBox="0 0 24 24"
               fill="none"
               onClick={() => setMenubar(!Menubar)}
+              className="lg:hidden"
             >
               <mask
                 id="mask0_1920_6087"

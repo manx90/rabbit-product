@@ -10,40 +10,103 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import SideBar from "@/components/SideBar";
-import { useState } from "react";
-import data from "./../data/products_with_real_images.json";
+import { useState, useEffect } from "react";
+import { Product } from "@/api/productAPI";
 import React from "react";
+import SecondaryHeader from "@/components/SeconderyHeader";
+
+// Utility to prefix image URLs
+function prefixImgUrl(url) {
+  if (!url) return "";
+  if (url.startsWith("http")) return url;
+  return `https://api.rabbit.ps/uploads/${url}`;
+}
 
 export default function Home() {
   const [Menubar, setMenubar] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // تجميع المنتجات حسب التصنيف
-  const groupedProducts = data.reduce((acc, product) => {
-    if (!acc[product.category]) {
-      acc[product.category] = [];
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await Product.getAll();
+        let fetchedProducts = response?.data || [];
+        // Prefix all image URLs for each product
+        fetchedProducts = fetchedProducts.map((product) => {
+          const images = (product.images || []).map(prefixImgUrl);
+          const imgCover = prefixImgUrl(product.imgCover);
+          const imgSizeChart = prefixImgUrl(product.imgSizeChart);
+          const imgMeasure = prefixImgUrl(product.imgMeasure);
+          const colors = (product.colors || []).map((c) => ({
+            ...c,
+            imgColor: prefixImgUrl(c.imgColor),
+          }));
+          const sizeDetails = (product.sizeDetails || []).map((s) => ({
+            ...s,
+            quantities: (s.quantities || []).map((q) => ({ ...q })),
+          }));
+          return {
+            ...product,
+            images,
+            imgCover,
+            imgSizeChart,
+            imgMeasure,
+            colors,
+            sizeDetails,
+          };
+        });
+        setProducts(fetchedProducts);
+      } catch (err) {
+        setError("فشل في جلب المنتجات.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProducts();
+  }, []);
+
+  // Group products by category
+  const groupedProducts = products.reduce((acc, product) => {
+    const subCategory = product.subCategory?.name || product.subCategory || "غير مصنف";
+    if (!acc[subCategory]) {
+      acc[subCategory] = [];
     }
-    acc[product.category].push(product);
+    acc[subCategory].push(product);
     return acc;
   }, {});
 
   return (
     <>
       <Header Menubar={Menubar} setMenubar={setMenubar} />
-
+      <SecondaryHeader />
       {!Menubar && (
         <>
           <Announcement />
           <NoteScrolling />
-
-          {Object.entries(groupedProducts).map(([category, products]) => (
-            <React.Fragment key={category}>
-              <Category name={category} all={true} />
-              <ProductSlider products={products} />
-            </React.Fragment>
-          ))}
+          {loading ? (
+            <div className="flex justify-center items-center min-h-[200px]">
+              <span className="text-gray-500">جاري تحميل المنتجات...</span>
+            </div>
+          ) : error ? (
+            <div className="flex justify-center items-center min-h-[200px]">
+              <span className="text-red-500">{error}</span>
+            </div>
+          ) : (
+            Object.entries(groupedProducts).map(([category, products]) => (
+              <React.Fragment key={category}>
+                <div className="lg:mx-12 mb-8">
+                  <Category name={category} all={true} />
+                  <ProductSlider products={products} />
+                </div>
+              </React.Fragment>
+            ))
+          )}
         </>
       )}
-
       <Footer />
       <SideBar Menubar={Menubar} />
     </>
@@ -52,7 +115,7 @@ export default function Home() {
 
 function Announcement() {
   return (
-    <div className="bg-[#E04444] mt-[70px] mb-2 text-white text-center text-sm py-2 px-4 font-Lato">
+    <div className="bg-[#E04444] mb-2 text-white text-center text-sm py-2 px-4 font-Lato">
       التوصيل مجانا ولفترة محدودة لجميع انحاء الضفة
     </div>
   );
