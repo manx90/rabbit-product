@@ -4,6 +4,7 @@ const axiosClient = axios.create({
 		.VITE_RABBIT_PI_BASE_URL,
 	headers: {
 		referrerPolicy: "unsafe-url",
+		AccessControlAllowOrigin: "*",
 	},
 });
 

@@ -66,5 +66,38 @@
 	body {
 		@apply bg-background text-foreground font-Lato;
 		background: #fafafa;
+		transition: background 0.4s
+			cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.custom-scrollbar {
+		scrollbar-width: thin; /* Firefox */
+		scrollbar-color: #0095ff transparent; /* Firefox */
+
+		/* For WebKit browsers */
+	}
+	.custom-scrollbar::-webkit-scrollbar {
+		width: 2px;
+		height: 2px;
+	}
+	.custom-scrollbar::-webkit-scrollbar-track {
+		background: transparent;
+	}
+	.custom-scrollbar::-webkit-scrollbar-thumb {
+		background: transparent;
+		border-radius: 3px;
+	}
+	.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+		background: transparent;
+	}
+	.dark body {
+		background: linear-gradient(
+			135deg,
+			#181c24 0%,
+			#232946 100%
+		);
+		@apply bg-background text-foreground font-Lato;
+		transition: background 0.4s
+			cubic-bezier(0.4, 0, 0.2, 1);
 	}
 }

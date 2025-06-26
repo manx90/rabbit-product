@@ -1,6 +1,14 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import {
+	createContext,
+	useContext,
+	useState,
+	useEffect,
+} from "react";
 import { Product } from "@/api/productAPI";
-import { useParams, useNavigate } from "react-router-dom";
+import {
+	useParams,
+	useNavigate,
+} from "react-router-dom";
 const ProductPageContext = createContext();
 
 // Utility to prefix image URLs
@@ -10,12 +18,16 @@ function prefixImgUrl(url) {
 	return `https://api.rabbit.ps/uploads/${url}`;
 }
 
-export function ProductPageProvider({ children }) {
+export function ProductPageProvider({
+	children,
+}) {
 	const { id } = useParams();
 	const navigate = useNavigate();
 	const [product, setProduct] = useState(null);
-	const [selectedColor, setSelectedColor] = useState("");
-	const [selectedSize, setSelectedSize] = useState("");
+	const [selectedColor, setSelectedColor] =
+		useState("");
+	const [selectedSize, setSelectedSize] =
+		useState("");
 	const [quantity, setQuantity] = useState(1);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
@@ -34,26 +46,46 @@ export function ProductPageProvider({ children }) {
 					return;
 				}
 
-				const response = await Product.getAll({ id: productId });
+				const response = await Product.getAll({
+					id: productId,
+				});
 
 				let foundProduct = null;
-				if (response && response.data && response.data.length > 0) {
+				if (
+					response &&
+					response.data &&
+					response.data.length > 0
+				) {
 					foundProduct = response.data[0];
 				}
 
 				if (foundProduct) {
 					// Prefix all image URLs
-					const images = (foundProduct.images || []).map(prefixImgUrl);
-					const imgCover = prefixImgUrl(foundProduct.imgCover);
-					const imgSizeChart = prefixImgUrl(foundProduct.imgSizeChart);
-					const imgMeasure = prefixImgUrl(foundProduct.imgMeasure);
-					const colors = (foundProduct.colors || []).map(c => ({
+					const images = (
+						foundProduct.images || []
+					).map(prefixImgUrl);
+					const imgCover = prefixImgUrl(
+						foundProduct.imgCover,
+					);
+					const imgSizeChart = prefixImgUrl(
+						foundProduct.imgSizeChart,
+					);
+					const imgMeasure = prefixImgUrl(
+						foundProduct.imgMeasure,
+					);
+					const colors = (
+						foundProduct.colors || []
+					).map((c) => ({
 						...c,
-						imgColor: prefixImgUrl(c.imgColor)
+						imgColor: prefixImgUrl(c.imgColor),
 					}));
-					const sizeDetails = (foundProduct.sizeDetails || []).map(s => ({
+					const sizeDetails = (
+						foundProduct.sizeDetails || []
+					).map((s) => ({
 						...s,
-						quantities: (s.quantities || []).map(q => ({ ...q }))
+						quantities: (s.quantities || []).map(
+							(q) => ({ ...q }),
+						),
 					}));
 
 					const productWithPrefixedImages = {
@@ -63,7 +95,7 @@ export function ProductPageProvider({ children }) {
 						imgSizeChart,
 						imgMeasure,
 						colors,
-						sizeDetails
+						sizeDetails,
 					};
 
 					setProduct(productWithPrefixedImages);
@@ -73,7 +105,9 @@ export function ProductPageProvider({ children }) {
 						setSelectedColor(colors[0].name);
 					}
 					if (sizeDetails.length > 0) {
-						setSelectedSize(sizeDetails[0].sizeName);
+						setSelectedSize(
+							sizeDetails[0].sizeName,
+						);
 					}
 				} else {
 					setError("Product not found");
@@ -98,7 +132,9 @@ export function ProductPageProvider({ children }) {
 		return (
 			<div className="flex flex-col items-center justify-center min-h-screen">
 				<div className="w-12 h-12 border-4 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
-				<p className="mt-4 text-gray-600">Loading product...</p>
+				<p className="mt-4 text-gray-600">
+					Loading product...
+				</p>
 			</div>
 		);
 	}
@@ -107,7 +143,9 @@ export function ProductPageProvider({ children }) {
 		return (
 			<div className="flex flex-col items-center justify-center min-h-screen">
 				<p className="text-red-500">{error}</p>
-				<p className="mt-2 text-gray-600">Redirecting to home page...</p>
+				<p className="mt-2 text-gray-600">
+					Redirecting to home page...
+				</p>
 			</div>
 		);
 	}
@@ -117,12 +155,21 @@ export function ProductPageProvider({ children }) {
 	}
 
 	// Find the selected sizeDetail
-	const selectedSizeDetail = product.sizeDetails?.find(s => s.sizeName === selectedSize);
+	const selectedSizeDetail =
+		product.sizeDetails?.find(
+			(s) => s.sizeName === selectedSize,
+		);
 	// Find the quantity for the selected color in the selected size
-	const colorQuantity = selectedSizeDetail?.quantities?.find(q => q.colorName === selectedColor)?.quantity || 0;
+	const colorQuantity =
+		selectedSizeDetail?.quantities?.find(
+			(q) => q.colorName === selectedColor,
+		)?.quantity || 0;
 
 	const handleQuantityChange = (newQuantity) => {
-		if (newQuantity >= 1 && newQuantity <= colorQuantity) {
+		if (
+			newQuantity >= 1 &&
+			newQuantity <= colorQuantity
+		) {
 			setQuantity(newQuantity);
 		}
 	};
@@ -152,7 +199,9 @@ export function ProductPageProvider({ children }) {
 export function useProductPage() {
 	const context = useContext(ProductPageContext);
 	if (!context) {
-		throw new Error("useProductPage must be used within a ProductPageProvider");
+		throw new Error(
+			"useProductPage must be used within a ProductPageProvider",
+		);
 	}
 	return context;
 }

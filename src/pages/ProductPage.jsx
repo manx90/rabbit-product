@@ -161,8 +161,14 @@ function Description({
 						setMainImage={setMainImage}
 					/>
 
-					<div className="flex flex-row-reverse my-5 sm:gap-5 gap-14 justify-between ">
-						<span className="font-Lato text-[20px] text-black ml-auto">
+					<div
+						dir="rtl"
+						className="my-5 sm:gap-5 gap-14 justify-between "
+					>
+						<span
+							dir="rtl"
+							className="font-Lato text-[20px] text-black dark:text-white ml-auto"
+						>
 							{product.name}
 						</span>
 					</div>
@@ -172,7 +178,7 @@ function Description({
 					>
 						<span
 							dir="rtl"
-							className="text-[18px]  text-[#535353] ml-auto"
+							className="text-[18px]  text-[#535353] dark:text-gray-300 ml-auto"
 						>
 							{product.description}
 						</span>
@@ -184,7 +190,7 @@ function Description({
 					<div className="flex flex-row items-center gap-2 my-2">
 						<span
 							dir="rtl"
-							className="text-[18px] font-medium text-[#535353]"
+							className="text-[18px] font-medium text-black dark:text-white"
 						>
 							المتوفر:
 						</span>
@@ -199,7 +205,7 @@ function Description({
 								{colorQuantity}
 							</span>
 						</div>
-						<span className="text-[14px] text-[#535353] mr-2 flex items-center gap-1">
+						<span className="text-[14px] text-black dark:text-white mr-2 flex items-center gap-1">
 							<span>قطعة</span>
 							<span className="inline-block w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
 						</span>
@@ -249,11 +255,11 @@ function Description({
 				</span> */}
 					</div>
 					<div className="flex flex-col gap-2 lg:gap-5">
-						<span className="mt-3 mb-2 text-[#535353] text-right max-w-[450px]">
+						<span className="mt-3 mb-2 text-black dark:text-white text-right max-w-[450px]">
 							يرجى اختيار القياس
 						</span>
 						<fieldset className="flex flex-row flex-wrap gap-3 items-center border-0 p-0 m-0">
-							<legend className="sr-only">
+							<legend className="sr-only text-black dark:text-white">
 								اختر القياس
 							</legend>
 							{product.sizeDetails?.map(
@@ -302,11 +308,11 @@ function Description({
 								),
 							)}
 						</fieldset>
-						<span className="mt-5 mb-2 text-[#535353] text-right max-w-[450px]">
+						<span className="mt-5 mb-2 text-black dark:text-white text-right max-w-[450px]">
 							يرجى اختيار اللون
 						</span>
 						<fieldset className="flex flex-wrap gap-2 justify-start flex-row border-0 p-0 m-0">
-							<legend className="sr-only">
+							<legend className="sr-only text-black dark:text-white">
 								اختر اللون
 							</legend>
 							{product.colors?.map((color) => (
@@ -365,7 +371,7 @@ function Description({
 								</label>
 							))}
 						</fieldset>
-						<span className="mt-5 mb-2 text-[#535353] text-right max-w-[450px]">
+						<span className="mt-5 mb-2 text-black dark:text-white text-right max-w-[450px]">
 							الكمية
 						</span>
 						<div className="flex flex-row items-center gap-4">
@@ -439,7 +445,7 @@ function Description({
 
 				<div
 					dir="rtl"
-					className="mt-12 lg:mt-0 lg:flex-col justify-between"
+					className="mt-12 lg:mt-0 flex flex-col justify-between gap-2"
 				>
 					<span className="text-[16px]">
 						الابعاد
@@ -447,12 +453,12 @@ function Description({
 					<img
 						src={product.imgSizeChart}
 						alt=""
-						className="mx-auto max-w-[450px] max-h-[450px] lg:max-w-[400px] lg:max-h-[550px] "
+						className="mx-auto  "
 					/>
 					<img
 						src={product.imgMeasure}
 						alt=""
-						className="mx-auto"
+						className="mx-auto max-w-[350px] max-h-full lg:max-w-[400px] lg:max-h-[550px]"
 					/>
 				</div>
 			</form>
@@ -460,32 +466,32 @@ function Description({
 				dir="rtl"
 				className="flex flex-col gap-[12px] mt-12 lg:flex-row"
 			>
-				<span className="text-2xl lg:text-[16px] font-medium text-black">
+				<span className="text-2xl lg:text-[16px] font-medium text-black dark:text-white">
 					سياساتنا في العمل:
 				</span>
 				<div className="flex flex-col">
-					<span className="text-[#535353] text-[16px] py-3">
+					<span className="text-[#535353] dark:text-white text-[16px] py-3">
 						الدفع والتوصيل:
 					</span>
-					<span className="text-[#535353] text-[14px]">
+					<span className="text-[#535353]  dark:text-white text-[14px]">
 						ببساطة نقوم بايصال المنتج لغاية منزلك
 						وتقوم بدفع الثمن لموظف التوصيل
 					</span>
 				</div>
 				<div className="flex flex-col">
-					<span className="text-[#535353] text-[16px] py-3">
+					<span className="text-[#535353] dark:text-white text-[16px] py-3">
 						التبديل:
 					</span>
-					<span className="text-[#535353] text-[14px] ">
+					<span className="text-[#535353] dark:text-white text-[14px] ">
 						ببساطة نقوم بايصال المنتج لغاية منزلك
 						وتقوم بدفع الثمن لموظف التوصيل
 					</span>
 				</div>
 				<div className="flex flex-col">
-					<span className="text-[#535353] text-[16px] py-3">
+					<span className="text-[#535353] dark:text-white text-[16px] py-3">
 						الغاء الطلب:
 					</span>
-					<span className="text-[#535353] text-[14px] ">
+					<span className="text-[#535353] dark:text-white text-[14px] ">
 						ببساطة نقوم بايصال المنتج لغاية منزلك
 						وتقوم بدفع الثمن لموظف التوصيل
 					</span>
