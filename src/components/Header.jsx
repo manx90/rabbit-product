@@ -7,13 +7,50 @@ import styled from "styled-components";
 import SideBar from "@/components/SideBar";
 import CloseIcon from "@mui/icons-material/Close";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCart } from "@/contexts/CartContext";
 import SearchBox from "./searchBox";
 import Darkmode from "./Darkmode";
 
 export default function Header() {
 	const [Menubar, setMenubar] = useState(false);
+	const [isDark, setIsDark] = useState(false);
+
+	// useEffect(() => {
+	// 	const checkTheme = () => {
+	// 		console.log(
+	// 			"Header: html.classList",
+	// 			document.documentElement.classList.value,
+	// 		);
+	// 		setIsDark(
+	// 			document.documentElement.classList.contains(
+	// 				"dark",
+	// 			),
+	// 		);
+	// 	};
+	// 	checkTheme();
+	// 	// Listen for custom themechange event
+	// 	window.addEventListener(
+	// 		"themechange",
+	// 		checkTheme,
+	// 	);
+	// 	// Listen for system theme changes
+	// 	const media = window.matchMedia(
+	// 		"(prefers-color-scheme: dark)",
+	// 	);
+	// 	media.addEventListener("change", checkTheme);
+	// 	return () => {
+	// 		window.removeEventListener(
+	// 			"themechange",
+	// 			checkTheme,
+	// 		);
+	// 		media.removeEventListener(
+	// 			"change",
+	// 			checkTheme,
+	// 		);
+	// 	};
+	// }, []);
+
 	return (
 		<div className="bg-white dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 flex flex-col shadow-sm dark:shadow-lg transition-all">
 			<div className="flex align-center justify-between p-[16px] lg:px-[240px] py-[24px] border-b border-[#D9D9D9] dark:border-gray-700/70 dark:text-white">
@@ -56,9 +93,13 @@ export default function Header() {
 				</div>
 				<Link to="/">
 					<img
-						src="/mainlogo.png"
+						src={
+							isDark
+								? "/LogoTwo.svg"
+								: "/logoOne.svg"
+						}
 						alt="Rabbit Products Logo"
-						className="lg:mr-20 lg:w-42 dark:invert drop-shadow-md"
+						className="lg:mr-20 w-32 md:w-42 lg:w-52 dark:invert drop-shadow-md"
 					/>
 				</Link>
 				<div className="flex items-center justify-center gap-[12px]">
@@ -129,7 +170,10 @@ export default function Header() {
 					)}
 				</div>
 			</div>
-			<SideBar Menubar={Menubar} setMenubar={setMenubar} />
+			<SideBar
+				Menubar={Menubar}
+				setMenubar={setMenubar}
+			/>
 		</div>
 	);
 }

@@ -8,7 +8,7 @@ export class Product {
 		try {
 			const response = await axiosClient.get(
 				`${mainDirection}?limit=80`,
-				{ params }
+				{ params },
 			);
 			return response;
 		} catch (error) {

@@ -71,14 +71,15 @@
 	}
 
 	.custom-scrollbar {
-		scrollbar-width: thin; /* Firefox */
+		scrollbar-width: thin;
+		/* Firefox */
 		scrollbar-color: #0095ff transparent; /* Firefox */
 
 		/* For WebKit browsers */
 	}
 	.custom-scrollbar::-webkit-scrollbar {
 		width: 2px;
-		height: 2px;
+		height: 0.5px;
 	}
 	.custom-scrollbar::-webkit-scrollbar-track {
 		background: transparent;

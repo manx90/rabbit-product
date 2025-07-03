@@ -187,29 +187,6 @@ function Description({
 				{/* for selecting to cart */}
 
 				<div className="flex-col justify-between">
-					<div className="flex flex-row items-center gap-2 my-2">
-						<span
-							dir="rtl"
-							className="text-[18px] font-medium text-black dark:text-white"
-						>
-							المتوفر:
-						</span>
-						<div
-							dir="rtl"
-							className="flex items-center justify-center bg-green-100 border border-green-400 rounded-full px-4 py-1 min-w-[48px]"
-						>
-							<span
-								dir="rtl"
-								className="text-green-600 font-bold text-[20px] tracking-widest"
-							>
-								{colorQuantity}
-							</span>
-						</div>
-						<span className="text-[14px] text-black dark:text-white mr-2 flex items-center gap-1">
-							<span>قطعة</span>
-							<span className="inline-block w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-						</span>
-					</div>
 					<div className="flex flex-row-reverse items-end gap-2 bg-[#FFF0F0] border border-[#FFD6D6] rounded-lg px-4 py-2 ml-auto shadow-sm w-fit">
 						<svg
 							dir="rtl"
@@ -254,7 +231,7 @@ function Description({
 					عرض خاص!
 				</span> */}
 					</div>
-					<div className="flex flex-col gap-2 lg:gap-5">
+					<div className="flex flex-col gap-2 lg:gap-3">
 						<span className="mt-3 mb-2 text-black dark:text-white text-right max-w-[450px]">
 							يرجى اختيار القياس
 						</span>
@@ -308,7 +285,7 @@ function Description({
 								),
 							)}
 						</fieldset>
-						<span className="mt-5 mb-2 text-black dark:text-white text-right max-w-[450px]">
+						<span className="mt-2 mb-2 text-black dark:text-white text-right max-w-[450px]">
 							يرجى اختيار اللون
 						</span>
 						<fieldset className="flex flex-wrap gap-2 justify-start flex-row border-0 p-0 m-0">
@@ -371,7 +348,30 @@ function Description({
 								</label>
 							))}
 						</fieldset>
-						<span className="mt-5 mb-2 text-black dark:text-white text-right max-w-[450px]">
+						<div className="flex flex-row items-center gap-2 my-2">
+							<span
+								dir="rtl"
+								className="text-[18px] font-medium text-black dark:text-white"
+							>
+								المتوفر:
+							</span>
+							<div
+								dir="rtl"
+								className="flex items-center justify-center bg-green-100 border border-green-400 rounded-full px-4 py-1 min-w-[48px]"
+							>
+								<span
+									dir="rtl"
+									className="text-green-600 font-bold text-[20px] tracking-widest"
+								>
+									{colorQuantity}
+								</span>
+							</div>
+							<span className="text-[14px] text-black dark:text-white mr-2 flex items-center gap-1">
+								<span>قطعة</span>
+								<span className="inline-block w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+							</span>
+						</div>
+						<span className="mt-2 mb-2 text-black dark:text-white text-right max-w-[450px]">
 							الكمية
 						</span>
 						<div className="flex flex-row items-center gap-4">
@@ -426,11 +426,8 @@ function Description({
 								</button>
 							</div>
 						</div>
-						<button className="bg-black  w-full px-[4px] py-3 flex border-solid  items-center justify-center gap-[4px] flex-row-reverse rounded-sm mx-auto">
-							<span
-								className="text-white 
-					text-[16px] sm:text-[11px] md:text-[12px] lg:text-[13px] xl:text-[14px] 2xl:text-[15px]"
-							>
+						<button className="bg-[#fefefe] dark:bg-gradient-to-r dark:from-blue-900 dark:to-blue-700 w-full p-[4px] py-3 flex border-solid border-2 border-[#ecebebf0] dark:border-blue-800 items-center justify-center gap-[4px] flex-row-reverse rounded-sm mx-auto shadow hover:bg-blue-50 dark:hover:bg-blue-800/80 transition-colors group">
+							<span className="text-black font-Lato dark:text-white text-[14px] md:text-[12px] lg:text-[13px] xl:text-[18px] 2xl:text-[15px] group-hover:text-blue-600 dark:group-hover:text-blue-200 transition-colors">
 								أضف الى السلة
 							</span>
 							<img
