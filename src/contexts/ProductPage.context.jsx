@@ -128,16 +128,16 @@ export function ProductPageProvider({
 		}
 	}, [id, navigate]);
 
-	if (loading) {
-		return (
-			<div className="flex flex-col items-center justify-center min-h-screen">
-				<div className="w-12 h-12 border-4 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
-				<p className="mt-4 text-gray-600">
-					Loading product...
-				</p>
-			</div>
-		);
-	}
+	// if (loading) {
+	// 	return (
+	// 		<div className="flex flex-col items-center justify-center min-h-screen">
+	// 			<div className="w-12 h-12 border-4 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
+	// 			<p className="mt-4 text-gray-600">
+	// 				Loading product...
+	// 			</p>
+	// 		</div>
+	// 	);
+	// }
 
 	if (error) {
 		return (

@@ -19,31 +19,6 @@ export default function ProductPage() {
 	return (
 		<div className="flex flex-col align-center gap-2">
 			<Header />
-			{/* <div className="my-[12px] shadow-sm">
-				<div className="flex justify-between items-center py-[8px] px-[12px]">
-					<div className="font-Lato">
-						<Link to="/" className="hover:text-blue-500">
-							Home
-						</Link>
-						<span className="mx-2">›</span>
-						<Link
-							to={`/category/${product.category?.id || product.category}`}
-							className="hover:text-blue-500"
-						>
-							{product.category?.name || product.category}
-						</Link>
-						<span className="mx-2">›</span>
-						<Link
-							to={`/category/${product.category?.id || product.category}/subcategory/${product.subCategory?.id || product.subCategory}`}
-							className="hover:text-blue-500"
-						>
-							{product.subCategory?.name || product.subCategory}
-						</Link>
-						<span className="mx-2">›</span>
-						<span>{product.name}</span>
-					</div>
-				</div>
-			</div> */}
 			<div className="flex flex-col gap-2 justify-center m-[16px]">
 				<Description
 					MainImage={MainImage}
