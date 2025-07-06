@@ -283,49 +283,56 @@ export default function Home() {
 					<Announcement />
 					<NoteScrolling />
 
-					{loading ? (
-						<div className="flex justify-center items-center min-h-[200px]">
-							<span className="text-gray-500">
-								جاري تحميل المنتجات...
-							</span>
-						</div>
-					) : error ? (
-						<div className="flex justify-center items-center min-h-[200px]">
-							<span className="text-red-500">
-								{error}
-							</span>
-						</div>
-					) : (
-						Object.entries(groupedProducts).map(
-							([groupKey, group]) => (
-								<React.Fragment key={groupKey}>
-									<div className="lg:mx-12 mb-8">
-										<Category
-											name={group.subCategoryName}
-											idSub={group.subCategoryId}
-											idCat={group.categoryId}
-											all={true}
-										/>
-										<ProductSlider
-											products={group.products}
-											subCategoryId={
-												group.subCategoryId
-											}
-											subCategoryName={
-												group.subCategoryName
-											}
-											categoryId={
-												group.categoryId
-											}
-											categoryName={
-												group.categoryName
-											}
-										/>
-									</div>
-								</React.Fragment>
-							),
+					{
+						// loading ? (
+						// 	<div className="flex justify-center items-center min-h-[200px]">
+						// 		<span className="text-gray-500">
+						// 			جاري تحميل المنتجات...
+						// 		</span>
+						// 	</div>
+						// ) :
+						error ? (
+							<div className="flex justify-center items-center min-h-[200px]">
+								<span className="text-red-500">
+									{error}
+								</span>
+							</div>
+						) : (
+							Object.entries(groupedProducts).map(
+								([groupKey, group]) => (
+									<React.Fragment key={groupKey}>
+										<div className="lg:mx-12 mb-8">
+											<Category
+												name={
+													group.subCategoryName
+												}
+												idSub={
+													group.subCategoryId
+												}
+												idCat={group.categoryId}
+												all={true}
+											/>
+											<ProductSlider
+												products={group.products}
+												subCategoryId={
+													group.subCategoryId
+												}
+												subCategoryName={
+													group.subCategoryName
+												}
+												categoryId={
+													group.categoryId
+												}
+												categoryName={
+													group.categoryName
+												}
+											/>
+										</div>
+									</React.Fragment>
+								),
+							)
 						)
-					)}
+					}
 				</>
 			)}
 			<Footer />

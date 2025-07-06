@@ -7,10 +7,10 @@ import {
 import Loading from "./components/Loading";
 import { CartProvider } from "@/contexts/CartContext";
 import { ProductPageProvider } from "./contexts/ProductPage.context";
-
-const Home = lazy(() =>
-	import("./pages/Home.jsx"),
-);
+import Home from "./pages/Home";
+// const Home = lazy(() =>
+// 	import("./pages/Home.jsx"),
+// );
 const CategoryPage = lazy(() =>
 	import("./pages/CategoryPage.jsx"),
 );
