@@ -11,11 +11,15 @@ export class Order {
 		axiosClient.get(`${mainDirection}/${id}`);
 	// create order
 	static create = (formData) =>
-		axiosClient.post(mainDirection, formData, {
-			headers: {
-				"Content-Type": "application/json",
+		axiosClient.post(
+			`${mainDirection}/create`,
+			formData,
+			{
+				headers: {
+					"Content-Type": "application/json",
+				},
 			},
-		});
+		);
 	// who is ready this order?
 	static readyBy = (id) =>
 		axiosClient.put(

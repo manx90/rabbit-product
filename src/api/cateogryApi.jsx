@@ -2,8 +2,8 @@ import axiosClient from "./axiosClient";
 
 const mainDirection = "/category";
 export class Category {
-	static getAll = () =>
-		axiosClient.get(mainDirection);
+	static getAll = (params) =>
+		axiosClient.get(mainDirection, { params });
 	static getOne = (id) =>
 		axiosClient.get(`${mainDirection}/${id}`);
 	static getSubCategory = () =>

@@ -4,10 +4,12 @@ import axiosClient from "./axiosClient";
 const mainDirection = "/product";
 
 export class Product {
-	static getAll = async (params = {}) => {
+	static getAll = async (
+		params = { limit: 200 },
+	) => {
 		try {
 			const response = await axiosClient.get(
-				`${mainDirection}?limit=80`,
+				`${mainDirection}`,
 				{ params },
 			);
 			return response;

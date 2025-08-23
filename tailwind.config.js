@@ -82,11 +82,9 @@ export default {
 			},
 			fontFamily: {
 				Lato: ["Noto Kufi Arabic", "sans-serif"],
+				NotoSerif: ["Noto Serif", "serif"],
 			},
 		},
 	},
-	plugins: [
-		import("tailwindcss-animate"),
-		import("tailwind-scrollbar"),
-	],
+	plugins: [import("tailwindcss-animate")],
 };

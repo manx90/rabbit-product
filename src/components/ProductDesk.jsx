@@ -1,6 +1,6 @@
 import React from "react";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { useCart } from "@/contexts/CartContext";
+import { useCart } from "@/hooks/useCartRedux";
 
 export default function ProductDesk({ item }) {
 	const { removeItem, changeQty } = useCart();

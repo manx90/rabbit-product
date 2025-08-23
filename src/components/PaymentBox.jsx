@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { useCart } from "@/contexts/CartContext";
+import { useCart } from "@/hooks/useCartRedux";
 
 export default function PaymentBox({ fix }) {
 	const { items } = useCart();
 	const [paymentStatus, setPaymentStatus] =
-		useState(null); // null | 'success' | 'error'
+		useState(null);
 	const [loading, setLoading] = useState(false);
 
 	const total = items.reduce(
