@@ -1,4 +1,4 @@
-import styled from "tailwind-styled-components";
+import styled from 'tailwind-styled-components';
 const Row = styled.div`
 	flex flex-row gap-2 ;
 `;
@@ -22,11 +22,8 @@ const ScrollColorImg = styled.div`
 
 const ImgProductSlider = styled.img`
 	 h-[200px] w-full object-contain hover:scale-[1.05] transition-all duration-300 drop-shadow-md dark:drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)] ${(
-			props,
-		) =>
-			props.imageloaded === "true"
-				? "opacity-100"
-				: "opacity-0"}
+     props
+   ) => (props.imageloaded === 'true' ? 'opacity-100' : 'opacity-0')}
 `;
 
 const Span = styled.span`
@@ -49,13 +46,13 @@ const CommandItem = styled.div`
 `;
 
 export {
-	Row,
-	Column,
-	ButtonCard,
-	Span,
-	ProductSlider,
-	Product,
-	ScrollColorImg,
-	ImgProductSlider,
-	CommandItem,
+  Row,
+  Column,
+  ButtonCard,
+  Span,
+  ProductSlider,
+  Product,
+  ScrollColorImg,
+  ImgProductSlider,
+  CommandItem,
 };

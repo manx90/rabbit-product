@@ -1,13 +1,13 @@
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 export default function ScrollToTop() {
-	const { pathname } = useLocation();
+  const { pathname } = useLocation();
 
-	useEffect(() => {
-		// Instantly jump to top when route changes (no animation)
-		window.scrollTo(0, 0);
-	}, [pathname]);
+  useEffect(() => {
+    // Instantly jump to top when route changes (no animation)
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
-	return null;
+  return null;
 }

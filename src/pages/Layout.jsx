@@ -1,28 +1,20 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import Cart from "../components/Cart";
-import { useState } from "react";
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
+import { useState } from 'react';
+import Cart from '../components/Cart';
 
 const Layout = ({ children }) => {
-	const [openInfo, setOpenInfo] = useState(false);
-	return (
-		<div className="flex flex-col custom-scrollbar h-full overflow-y-auto">
-			<header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
-				<Header
-					openInfo={openInfo}
-					setOpenInfo={setOpenInfo}
-				/>
-			</header>
-			<main className=" mt-[75px]">
-				{children}
-			</main>
-			<Cart
-				openInfo={openInfo}
-				setOpenInfo={setOpenInfo}
-			/>
-			<Footer />
-		</div>
-	);
+  const [openInfo, setOpenInfo] = useState(false);
+  return (
+    <div className='custom-scrollbar flex h-full flex-col overflow-y-auto'>
+      <header className='fixed left-0 right-0 top-0 z-50 dark:bg-slate-900 shadow-md'>
+        <Header openInfo={openInfo} setOpenInfo={setOpenInfo} />
+      </header>
+      <main className='md:mt-[70px] mt-[75px]'>{children}</main>
+      <Cart openInfo={openInfo} setOpenInfo={setOpenInfo} />
+      <Footer />
+    </div>
+  );
 };
 
 export default Layout;
