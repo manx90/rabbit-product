@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Darkmode from './Darkmode';
-import SearchBox from './SearchBox';
+import SearchBox from './SearchBox.jsx';
 
 export default function Header({ openInfo, setOpenInfo }) {
   const [Menubar, setMenubar] = useState(false);
