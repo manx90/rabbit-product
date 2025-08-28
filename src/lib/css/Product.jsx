@@ -12,12 +12,12 @@ const ProductSlider = styled.div`
 `;
 
 const Product = styled.div`
-	relative w-full max-w-[200px] min-h-[320px] max-h-[450px] p-2 gap-2 flex flex-col justify-between bg-[#231f1f08] dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 dark:shadow-lg shadow-sm rounded-md border border-transparent dark:border-gray-700  flex-shrink-0  hover:shadow-md  overflow-hidden;
+	relative w-full max-w-[180px] min-h-[320px] max-h-[450px] p-2 gap-2 flex flex-col justify-between bg-[#231f1f08] dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 dark:shadow-lg shadow-sm rounded-md border border-transparent dark:border-gray-700  flex-shrink-0  hover:shadow-md  overflow-hidden;
 `;
 //hover:border-blue-500  dark:hover:border-blue-500
 
 const ScrollColorImg = styled.div`
-	flex snap-x  gap-1  p-[4px] custom-scrollbar overflow-x-auto
+	flex snap-x  gap-1 flex-row-reverse p-[4px] custom-scrollbar overflow-x-auto
 `;
 
 const ImgProductSlider = styled.img`
@@ -46,13 +46,13 @@ const CommandItem = styled.div`
 `;
 
 export {
-  Row,
-  Column,
   ButtonCard,
-  Span,
-  ProductSlider,
-  Product,
-  ScrollColorImg,
-  ImgProductSlider,
+  Column,
   CommandItem,
+  ImgProductSlider,
+  Product,
+  ProductSlider,
+  Row,
+  ScrollColorImg,
+  Span,
 };

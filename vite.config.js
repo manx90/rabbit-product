@@ -1,21 +1,15 @@
-import path from 'path';
 import react from '@vitejs/plugin-react';
+import path from 'path';
 // import babel from "vite-plugin-babel";
-import tailwindcss from 'tailwindcss';
-import { defineConfig } from 'vite';
-import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import tailwindcss from 'tailwindcss';
+import { fileURLToPath } from 'url';
+import { defineConfig } from 'vite';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
-  plugins: [
-    react({
-      babel: {
-        plugins: ['babel-plugin-react-compiler'],
-      },
-    }),
-  ],
+  plugins: [react()],
   css: {
     plugins: [tailwindcss()],
   },

@@ -57,6 +57,17 @@ export default function ProductPage() {
       return;
     }
 
+    // Get available quantity for the selected size and color
+    let availableQuantity = 1;
+    if (selectedSizeDetail && selectedSizeDetail.quantities) {
+      const found = selectedSizeDetail.quantities.find(
+        (q) => q.colorName.trim() === selectedColor.trim()
+      );
+      if (found) {
+        availableQuantity = found.quantity;
+      }
+    }
+
     // Get available sizes and colors arrays like ProductSlider does
     const availableSizes =
       product.sizeDetails?.map((size) => size.sizeName) || [];
@@ -68,8 +79,8 @@ export default function ProductPage() {
       productId: product.id,
       sizeName: selectedSize,
       colorName: selectedColor,
-      quantity: quantity, // ProductSlider uses "quantity"
-      qty: quantity, // Also keep "qty" for compatibility
+      quantity: availableQuantity, // Use available stock, not user quantity
+      qty: quantity, // User's selected quantity
       image: selectedColorObj?.imgColor || product.imgCover,
       price: selectedSizeDetail.price,
       availableSizes,

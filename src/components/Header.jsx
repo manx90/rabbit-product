@@ -1,15 +1,15 @@
-import IconButton from '@mui/material/IconButton';
+import SideBar from '@/components/SideBar';
+import { useCart } from '@/hooks/useCartRedux';
+import { Column } from '@/lib/css/Product';
+import CloseIcon from '@mui/icons-material/Close';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCartOutlined';
 import Badge, { badgeClasses } from '@mui/material/Badge';
-import styled from 'styled-components';
-import SideBar from '@/components/SideBar';
-import CloseIcon from '@mui/icons-material/Close';
-import { Link } from 'react-router-dom';
+import IconButton from '@mui/material/IconButton';
 import { useState } from 'react';
-import { useCart } from '@/hooks/useCartRedux';
-import SearchBox from './SearchBox';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 import Darkmode from './Darkmode';
-import { Column } from '@/lib/css/Product';
+import SearchBox from './SearchBox';
 
 export default function Header({ openInfo, setOpenInfo }) {
   const [Menubar, setMenubar] = useState(false);

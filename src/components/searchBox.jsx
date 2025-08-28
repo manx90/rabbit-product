@@ -1,5 +1,3 @@
-'use client';
-
 import { SearchIcon } from 'lucide-react';
 import { RiArrowGoBackFill } from 'react-icons/ri';
 
@@ -103,7 +101,7 @@ function SearchToggle({
     <>
       <div
         className={[
-          'fixed inset-0 z-50 bg-black/50 transition-opacity duration-300',
+          'fixed inset-0 z-50 bg-black/50 transition-opacity duration-100',
           'flex h-screen w-full',
           open
             ? 'pointer-events-auto opacity-100'
@@ -116,7 +114,7 @@ function SearchToggle({
           onTouchStart={(e) => e.stopPropagation()}
           className={[
             'mx-auto my-auto flex h-fit max-h-[800px] w-fit gap-0',
-            'transition-all duration-300 will-change-transform',
+            'transition-all duration-100 will-change-transform',
             open
               ? 'translate-y-0 scale-100 opacity-100'
               : 'translate-y-2 scale-95 opacity-0',
@@ -146,7 +144,7 @@ function SearchToggle({
               className={[
                 'custom-scrollbar max-h-[60vh] w-full overflow-y-auto border-t border-slate-700',
                 'flex justify-between rounded-b-md bg-slate-900 px-3 text-white',
-                'transition-[opacity,transform] duration-300',
+                'transition-[opacity,transform] duration-100',
                 open ? 'translate-y-0 opacity-100' : '-translate-y-1 opacity-0',
               ].join(' ')}
             >

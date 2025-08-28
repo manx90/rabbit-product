@@ -1,20 +1,20 @@
-import { useState, useMemo, useCallback, memo, useEffect } from 'react';
-import { MdAddShoppingCart } from 'react-icons/md';
-import { useForm } from 'react-hook-form';
-import { FaCircleLeft } from 'react-icons/fa6';
-import { Link, useNavigate } from 'react-router-dom';
-import { useCart } from '@/hooks/useCartRedux';
 import { useToastContext } from '@/components/ui/toast';
+import { useCart } from '@/hooks/useCartRedux';
 import {
-  ProductSlider as ProductSliderStyled,
-  Product as ProductStyled,
-  ScrollColorImg,
+  ButtonCard,
   Column,
   ImgProductSlider,
-  Span,
+  ProductSlider as ProductSliderStyled,
+  Product as ProductStyled,
   Row,
-  ButtonCard,
+  ScrollColorImg,
+  Span,
 } from '@/lib/css/Product';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { FaCircleLeft } from 'react-icons/fa6';
+import { MdAddShoppingCart } from 'react-icons/md';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function ProductSlider({
   products = [],
@@ -273,7 +273,6 @@ export const Product = memo(function Product({ product }) {
             setModalOpen(true);
           }}
           className='group'
-          // variant="outline"
         >
           <span className='font-Lato text-black transition-colors dark:text-white dark:group-hover:text-white'>
             أضف الى السلة
@@ -317,7 +316,7 @@ const ColorOption = memo(function ColorOption({
   return (
     <img
       src={imageUrl}
-      className={`aspect-square h-10 w-10 cursor-pointer rounded-full object-cover ${
+      className={`mx-auto aspect-square h-10 w-10 cursor-pointer rounded-full object-cover ${
         isSelected
           ? 'border-2 border-blue-500 shadow-md'
           : 'border border-gray-200'
@@ -574,27 +573,14 @@ const ProductModal = memo(function ProductModal({
               <button
                 type='button'
                 onClick={onClose}
-                className='min-h-[44px] w-1/2 rounded-lg border border-gray-300 bg-gray-100 px-4 py-3 text-sm font-medium text-gray-700 transition-all duration-200 hover:border-gray-400 hover:bg-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-500 dark:hover:bg-gray-700'
+                className='min-h-[44px] w-1/2 rounded-lg border border-gray-300 bg-gray-100 p-1 text-sm font-medium text-gray-700 transition-all duration-200 hover:border-gray-400 hover:bg-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-500 dark:hover:bg-gray-700'
               >
                 متابعة التسوق
               </button>
               <button
                 type='submit'
-                className='flex min-h-[44px] w-1/2 items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-3 text-sm font-bold text-white shadow-md transition-all duration-200 hover:bg-blue-700 hover:shadow-lg'
+                className='flex min-h-[44px] w-1/2 items-center justify-center gap-2 rounded-lg bg-blue-600 p-1 text-sm font-bold text-white shadow-md transition-all duration-200 hover:bg-blue-700 hover:shadow-lg'
               >
-                <svg
-                  className='h-4 w-4'
-                  fill='none'
-                  stroke='currentColor'
-                  viewBox='0 0 24 24'
-                >
-                  <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth={2}
-                    d='M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 9H19'
-                  />
-                </svg>
                 أضف الى السلة
               </button>
             </div>

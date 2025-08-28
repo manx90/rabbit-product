@@ -47,7 +47,13 @@ const cartSlice = createSlice({
           p.sizeName === product.sizeName &&
           p.colorName === product.colorName
       );
-      console.log('Cart items:', JSON.parse(JSON.stringify(state.items)));
+      console.log('AddItem Debug:', {
+        productId: product.productId,
+        sizeName: product.sizeName,
+        colorName: product.colorName,
+        quantity: product.quantity,
+        qty: product.qty,
+      });
 
       if (exists) {
         exists.qty += product.qty;
@@ -94,7 +100,11 @@ const cartSlice = createSlice({
           p.colorName === colorName
       );
       if (item) {
-        item.qty = qty;
+        // Check if the requested quantity doesn't exceed available stock
+        const maxQuantity = item.quantity || 999; // Use stored quantity or fallback
+        const finalQty = Math.min(qty, maxQuantity);
+
+        item.qty = finalQty;
       }
       saveCartToStorage(state.items);
     },
@@ -104,7 +114,20 @@ const cartSlice = createSlice({
       if (qty < 1) return;
 
       if (index >= 0 && index < state.items.length) {
-        state.items[index].qty = qty;
+        const item = state.items[index];
+        // Check if the requested quantity doesn't exceed available stock
+        const maxQuantity = item.quantity || 999; // Use stored quantity or fallback
+        const finalQty = Math.min(qty, maxQuantity);
+
+        console.log('UpdateItemQuantity Debug:', {
+          requestedQty: qty,
+          maxQuantity: maxQuantity,
+          finalQty: finalQty,
+          itemQuantity: item.quantity,
+          itemQty: item.qty,
+        });
+
+        state.items[index].qty = finalQty;
         saveCartToStorage(state.items);
       }
     },

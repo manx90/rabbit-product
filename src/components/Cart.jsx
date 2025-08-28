@@ -7,7 +7,7 @@ import { Column, Row } from '@/lib/css/Product';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { FaHeart, FaMoneyCheck, FaRegHeart } from 'react-icons/fa';
+import { FaMoneyCheck } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
 import SelectingCart from './selectingCart';
 export default function Cart({ openInfo, setOpenInfo }) {
@@ -137,29 +137,28 @@ export default function Cart({ openInfo, setOpenInfo }) {
                             <Row className='flex min-w-0 flex-1 items-center justify-between'>
                               <Row>
                                 <Column>
-                                  <span className='mb-1 line-clamp-2 text-xl font-medium leading-tight text-gray-900 dark:text-white'>
+                                  <span className='mb-1 line-clamp-2 text-sm font-medium leading-tight text-gray-900 dark:text-white lg:text-xl'>
                                     {item.name}
                                   </span>
-                                  <Row>
-                                    <span className='mb-1 line-clamp-2 text-xs font-medium leading-tight text-gray-900 dark:text-slate-400'>
+                                  <Row className='items-center'>
+                                    <span className='line-clamp-2 text-xs font-medium leading-tight text-gray-900 dark:text-slate-400'>
                                       {item.category.name}
                                     </span>
+                                    <Row className='h-fit gap-1'>
+                                      <span className='line-clamp-2 rounded-full border border-gray-300 bg-blue-50 p-1 px-2 text-xs font-normal leading-tight text-blue-700 dark:border-gray-600 dark:bg-blue-900/30 dark:text-blue-300'>
+                                        {item.sizeName}
+                                      </span>
+
+                                      <span className='line-clamp-2 rounded-full border border-gray-300 bg-blue-50 p-1 px-2 text-xs font-medium leading-tight text-blue-700 dark:border-gray-600 dark:bg-blue-900/30 dark:text-blue-300'>
+                                        {item.colorName}
+                                      </span>
+                                    </Row>
                                   </Row>
                                 </Column>
-                                <Row className='h-fit gap-1'>
-                                  <span className='mb-1 line-clamp-2 rounded-full border border-gray-300 bg-blue-50 p-1 px-2 text-xs font-medium leading-tight text-blue-700 dark:border-gray-600 dark:bg-blue-900/30 dark:text-blue-300'>
-                                    {item.sizeName}
-                                  </span>
-
-                                  <span className='mb-1 line-clamp-2 rounded-full border border-gray-300 bg-blue-50 p-1 px-2 text-xs font-medium leading-tight text-blue-700 dark:border-gray-600 dark:bg-blue-900/30 dark:text-blue-300'>
-                                    {item.colorName}
-                                  </span>
-                                </Row>
                               </Row>
 
-                              {/* Quantity Controls */}
                               <Column className='mb-2'>
-                                <div className='flex items-center'>
+                                <div className='flex items-center gap-1'>
                                   <button
                                     onClick={() =>
                                       updateItemQuantity(
@@ -190,7 +189,19 @@ export default function Cart({ openInfo, setOpenInfo }) {
                                     onClick={() =>
                                       updateItemQuantity(index, item.qty + 1)
                                     }
-                                    className='flex h-6 w-6 items-center justify-center rounded-md bg-gray-200 text-gray-700 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
+                                    disabled={
+                                      item.qty >= (item.quantity || 999)
+                                    }
+                                    className={`flex h-6 w-6 items-center justify-center rounded-md transition-colors ${
+                                      item.qty >= (item.quantity || 999)
+                                        ? 'cursor-not-allowed bg-gray-100 text-gray-400 dark:bg-gray-800 dark:text-gray-600'
+                                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
+                                    }`}
+                                    title={
+                                      item.qty >= (item.quantity || 999)
+                                        ? `الكمية المتاحة: ${item.quantity}`
+                                        : 'زيادة الكمية'
+                                    }
                                   >
                                     <svg
                                       className='h-3 w-3'
@@ -207,6 +218,7 @@ export default function Cart({ openInfo, setOpenInfo }) {
                                     </svg>
                                   </button>
                                 </div>
+
                                 <Row
                                   dir='ltr'
                                   className='justify-center space-x-2'
@@ -217,23 +229,6 @@ export default function Cart({ openInfo, setOpenInfo }) {
                                     title='حذف من السلة'
                                   >
                                     <MdDeleteForever className='h-5 w-5 text-red-500' />
-                                  </button>
-                                  <button
-                                    onClick={() =>
-                                      handleFavoriteToggle(item, index)
-                                    }
-                                    className='rounded p-1'
-                                    title={
-                                      isItemInFavorites(item)
-                                        ? 'إزالة من المفضلة'
-                                        : 'إضافة إلى المفضلة'
-                                    }
-                                  >
-                                    {isItemInFavorites(item) ? (
-                                      <FaHeart className='h-5 w-5 text-red-500' />
-                                    ) : (
-                                      <FaRegHeart className='h-5 w-5 text-red-500' />
-                                    )}
                                   </button>
                                 </Row>
                               </Column>
@@ -266,13 +261,13 @@ export default function Cart({ openInfo, setOpenInfo }) {
                         onClick={() => setIsPayment(true)}
                         className='flex w-full items-center justify-center gap-2 rounded-lg bg-blue-700 px-3 py-2.5 font-medium text-white shadow-sm transition-colors hover:bg-blue-800 disabled:cursor-not-allowed disabled:bg-gray-400 dark:disabled:bg-gray-700'
                       >
-                        <span className='text-sm'>الدفع</span>
+                        <span className='text-sm'>اتمام الطلبات</span>
                         <FaMoneyCheck className='h-4 w-4' />
                       </button>
 
                       <button
                         onClick={() => setOpenInfo(false)}
-                        className='w-full py-1.5 text-xs font-medium text-blue-700 transition-colors hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300'
+                        className='w-full py-1.5 text-sm font-medium text-blue-700 transition-colors hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300'
                       >
                         متابعة التسوق
                       </button>

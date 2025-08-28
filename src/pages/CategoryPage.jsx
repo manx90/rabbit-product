@@ -1,8 +1,8 @@
 import { Product } from '@/components/ProductSlider';
-import { Announcement } from './Home';
-import { useParams, Link } from 'react-router-dom';
-import { useSubcategories } from '@/hooks/useSubcategories';
 import { useCategoryProducts } from '@/hooks/useCategoryProducts';
+import { useSubcategories } from '@/hooks/useSubcategories';
+import { Link, useParams } from 'react-router-dom';
+import { Announcement } from './Home';
 
 export default function CategoryPage() {
   const { categoryId, subcategoryId } = useParams();
@@ -29,8 +29,8 @@ export default function CategoryPage() {
       <Announcement />
 
       <div className='lg:mx-24'>
-        <div dir='rtl' className='px-4 py-2'>
-          <div className='custom-scrollbar flex flex-row gap-2 overflow-x-auto px-4 lg:justify-center lg:px-0'>
+        <div dir='rtl' className='px-4'>
+          <div className='custom-scrollbar flex flex-row gap-2 overflow-x-auto px-4 py-2 lg:justify-center lg:px-0'>
             {subcategories.map((subcategory) => (
               <Link
                 key={`${categoryId}-${subcategory.id}`}
