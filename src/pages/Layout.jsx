@@ -1,4 +1,4 @@
-import Footer from '@/components/Footer';
+import Footer from '@/components/footer';
 import Header from '@/components/Header';
 import { useState } from 'react';
 import Cart from '../components/Cart';
