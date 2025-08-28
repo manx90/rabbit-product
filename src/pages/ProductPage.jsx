@@ -1,4 +1,4 @@
-import ProductSlider from '@/components/ProductSlider';
+import { ProductSlider } from '@/components/ProductSlider';
 import { useToastContext } from '@/components/ui/toast';
 import { useCart } from '@/hooks/useCartRedux';
 import { useCategoryProducts } from '@/hooks/useCategoryProducts';
@@ -132,12 +132,11 @@ export default function ProductPage() {
         />
       </div>
       <LikeProduct product={product} />
-      <VideoDraggable />
+      {/* <VideoDraggable /> */}
     </div>
   );
 }
 function Photos({ product, selectedColor }) {
-  // Find the selected color object
   const selectedColorObj = product.colors?.find(
     (c) => c.name === selectedColor
   );
@@ -856,158 +855,158 @@ function Dimensions({ product, openDimensions = true, setOpenDimensions }) {
   );
 }
 
-function VideoDraggable() {
-  const [position, setPosition] = useState({
-    x: 0,
-    y: 96,
-  });
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState({
-    x: 0,
-    y: 0,
-  });
-  const [isVisible, setIsVisible] = useState(true);
+// function VideoDraggable() {
+//   const [position, setPosition] = useState({
+//     x: 0,
+//     y: 96,
+//   });
+//   const [isDragging, setIsDragging] = useState(false);
+//   const [dragStart, setDragStart] = useState({
+//     x: 0,
+//     y: 0,
+//   });
+//   const [isVisible, setIsVisible] = useState(true);
 
-  const handleMouseDown = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(true);
-    setDragStart({
-      x: e.clientX - position.x,
-      y: e.clientY - position.y,
-    });
-    // Prevent page scrolling while dragging
-    document.body.style.overflow = 'hidden';
-  };
+//   const handleMouseDown = (e) => {
+//     e.preventDefault();
+//     e.stopPropagation();
+//     setIsDragging(true);
+//     setDragStart({
+//       x: e.clientX - position.x,
+//       y: e.clientY - position.y,
+//     });
+//     // Prevent page scrolling while dragging
+//     document.body.style.overflow = 'hidden';
+//   };
 
-  const handleMouseMove = (e) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    e.stopPropagation();
+//   const handleMouseMove = (e) => {
+//     if (!isDragging) return;
+//     e.preventDefault();
+//     e.stopPropagation();
 
-    setPosition({
-      x: e.clientX - dragStart.x,
-      y: e.clientY - dragStart.y,
-    });
-  };
+//     setPosition({
+//       x: e.clientX - dragStart.x,
+//       y: e.clientY - dragStart.y,
+//     });
+//   };
 
-  const handleMouseUp = () => {
-    setIsDragging(false);
-    // Restore page scrolling
-    document.body.style.overflow = '';
-  };
+//   const handleMouseUp = () => {
+//     setIsDragging(false);
+//     // Restore page scrolling
+//     document.body.style.overflow = '';
+//   };
 
-  const handleTouchStart = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const touch = e.touches[0];
-    setIsDragging(true);
-    setDragStart({
-      x: touch.clientX - position.x,
-      y: touch.clientY - position.y,
-    });
-    // Prevent page scrolling while dragging
-    document.body.style.overflow = 'hidden';
-  };
+//   const handleTouchStart = (e) => {
+//     e.preventDefault();
+//     e.stopPropagation();
+//     const touch = e.touches[0];
+//     setIsDragging(true);
+//     setDragStart({
+//       x: touch.clientX - position.x,
+//       y: touch.clientY - position.y,
+//     });
+//     // Prevent page scrolling while dragging
+//     document.body.style.overflow = 'hidden';
+//   };
 
-  const handleTouchMove = (e) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    e.stopPropagation();
+//   const handleTouchMove = (e) => {
+//     if (!isDragging) return;
+//     e.preventDefault();
+//     e.stopPropagation();
 
-    const touch = e.touches[0];
-    setPosition({
-      x: touch.clientX - dragStart.x,
-      y: touch.clientY - dragStart.y,
-    });
-  };
+//     const touch = e.touches[0];
+//     setPosition({
+//       x: touch.clientX - dragStart.x,
+//       y: touch.clientY - dragStart.y,
+//     });
+//   };
 
-  const handleTouchEnd = () => {
-    setIsDragging(false);
-    // Restore page scrolling
-    document.body.style.overflow = '';
-  };
+//   const handleTouchEnd = () => {
+//     setIsDragging(false);
+//     // Restore page scrolling
+//     document.body.style.overflow = '';
+//   };
 
-  const handleClose = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsVisible(false);
-  };
+//   const handleClose = (e) => {
+//     e.preventDefault();
+//     e.stopPropagation();
+//     setIsVisible(false);
+//   };
 
-  useEffect(() => {
-    if (isDragging) {
-      document.addEventListener('mousemove', handleMouseMove, {
-        passive: false,
-      });
-      document.addEventListener('mouseup', handleMouseUp);
-      document.addEventListener('touchmove', handleTouchMove, {
-        passive: false,
-      });
-      document.addEventListener('touchend', handleTouchEnd);
-    }
+//   useEffect(() => {
+//     if (isDragging) {
+//       document.addEventListener('mousemove', handleMouseMove, {
+//         passive: false,
+//       });
+//       document.addEventListener('mouseup', handleMouseUp);
+//       document.addEventListener('touchmove', handleTouchMove, {
+//         passive: false,
+//       });
+//       document.addEventListener('touchend', handleTouchEnd);
+//     }
 
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-      document.removeEventListener('touchmove', handleTouchMove);
-      document.removeEventListener('touchend', handleTouchEnd);
-      // Ensure overflow is restored when component unmounts
-      document.body.style.overflow = '';
-    };
-  }, [isDragging, dragStart]);
+//     return () => {
+//       document.removeEventListener('mousemove', handleMouseMove);
+//       document.removeEventListener('mouseup', handleMouseUp);
+//       document.removeEventListener('touchmove', handleTouchMove);
+//       document.removeEventListener('touchend', handleTouchEnd);
+//       // Ensure overflow is restored when component unmounts
+//       document.body.style.overflow = '';
+//     };
+//   }, [isDragging, dragStart]);
 
-  // Clean up on unmount
-  useEffect(() => {
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, []);
+//   // Clean up on unmount
+//   useEffect(() => {
+//     return () => {
+//       document.body.style.overflow = '';
+//     };
+//   }, []);
 
-  if (!isVisible) return null;
+//   if (!isVisible) return null;
 
-  return (
-    <div
-      className={`fixed z-50 h-auto w-auto cursor-move select-none rounded-lg bg-red-500 ${
-        isDragging ? 'opacity-80' : ''
-      }`}
-      style={{
-        left: `${position.x}px`,
-        top: `${position.y}px`,
-        transform: isDragging ? 'scale(1.05)' : 'scale(1)',
-        transition: isDragging ? 'none' : 'transform 0.2s ease',
-        touchAction: 'none', // Prevent touch gestures
-      }}
-      onMouseDown={handleMouseDown}
-      onTouchStart={handleTouchStart}
-    >
-      {/* Close button */}
-      <button
-        onClick={handleClose}
-        className='absolute -right-2 -top-2 z-10 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-white shadow-md hover:bg-gray-100'
-      >
-        <svg
-          className='h-4 w-4 text-gray-600'
-          fill='none'
-          stroke='currentColor'
-          viewBox='0 0 24 24'
-        >
-          <path
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            strokeWidth={2}
-            d='M6 18L18 6M6 6l12 12'
-          />
-        </svg>
-      </button>
+//   return (
+//     <div
+//       className={`fixed z-50 h-auto w-auto cursor-move select-none rounded-lg bg-red-500 ${
+//         isDragging ? 'opacity-80' : ''
+//       }`}
+//       style={{
+//         left: `${position.x}px`,
+//         top: `${position.y}px`,
+//         transform: isDragging ? 'scale(1.05)' : 'scale(1)',
+//         transition: isDragging ? 'none' : 'transform 0.2s ease',
+//         touchAction: 'none', // Prevent touch gestures
+//       }}
+//       onMouseDown={handleMouseDown}
+//       onTouchStart={handleTouchStart}
+//     >
+//       {/* Close button */}
+//       <button
+//         onClick={handleClose}
+//         className='absolute -right-2 -top-2 z-10 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-white shadow-md hover:bg-gray-100'
+//       >
+//         <svg
+//           className='h-4 w-4 text-gray-600'
+//           fill='none'
+//           stroke='currentColor'
+//           viewBox='0 0 24 24'
+//         >
+//           <path
+//             strokeLinecap='round'
+//             strokeLinejoin='round'
+//             strokeWidth={2}
+//             d='M6 18L18 6M6 6l12 12'
+//           />
+//         </svg>
+//       </button>
 
-      <video
-        src='/video.mp4'
-        autoPlay
-        loop
-        muted
-        playsInline
-        className='w-30 h-40 rounded-lg object-contain'
-      />
-    </div>
-  );
-}
+//       <video
+//         src='/video.mp4'
+//         autoPlay
+//         loop
+//         muted
+//         playsInline
+//         className='w-30 h-40 rounded-lg object-contain'
+//       />
+//     </div>
+//   );
+// }

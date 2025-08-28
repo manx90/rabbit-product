@@ -16,7 +16,7 @@ import { FaCircleLeft } from 'react-icons/fa6';
 import { MdAddShoppingCart } from 'react-icons/md';
 import { Link, useNavigate } from 'react-router-dom';
 
-export default function ProductSlider({
+export const ProductSlider = memo(function ProductSlider({
   products = [],
   subCategoryId,
   categoryId,
@@ -25,8 +25,16 @@ export default function ProductSlider({
   const navigate = useNavigate();
   return (
     <ProductSliderStyled>
-      {products?.map((product, index) => (
-        <Product key={product.id || index} product={product} />
+      {products?.map((p) => (
+        <Product
+          key={p.id ?? p._id ?? p.slug}
+          id={p.id}
+          name={p.name}
+          price={p.price}
+          imgCover={p.imgCover}
+          colors={p.colors}
+          sizeDetails={p.sizeDetails}
+        />
       ))}
 
       {!likeProduct && (
@@ -46,264 +54,245 @@ export default function ProductSlider({
       )}
     </ProductSliderStyled>
   );
-}
+});
+const shallowEqualBy = (a = [], b = [], keyFn) => {
+  if (a === b) return true;
+  if (!a || !b || a.length !== b.length) return false;
+  for (let i = 0; i < a.length; i++) {
+    if (keyFn(a[i]) !== keyFn(b[i])) return false;
+  }
+  return true;
+};
 
-// Memoize the Product component to prevent unnecessary re-renders
-export const Product = memo(function Product({ product }) {
-  // Memoize image path calculation
-  const mainImage = useMemo(() => {
-    return (
-      product.imgCover ||
-      (product.colors && product.colors[0]?.imgColor) ||
-      'product.png'
+export const Product = memo(
+  function Product({
+    price,
+    sizeDetails = [],
+    colors = [],
+    imgCover,
+    name,
+    id,
+  }) {
+    const mainImage = useMemo(
+      () => imgCover || colors[0]?.imgColor || 'product.png',
+      [imgCover, colors]
     );
-  }, [product.imgCover, product.colors]);
 
-  const [photo, setPhoto] = useState(mainImage);
-  const [imageLoaded, setImageLoaded] = useState(false);
+    const [photo, setPhoto] = useState(mainImage);
+    const [imageLoaded, setImageLoaded] = useState(false);
+    useEffect(() => setPhoto(mainImage), [mainImage]);
 
-  const { addItem } = useCart();
-  const { addToast } = useToastContext
-    ? useToastContext()
-    : { addToast: () => {} };
+    const { addItem } = useCart();
+    const { addToast } = useToastContext
+      ? useToastContext()
+      : { addToast: () => {} };
 
-  // Memoize price display calculation to prevent recalculation on every render
-  const priceDisplay = useMemo(() => {
-    if (!product?.sizeDetails || product.sizeDetails.length === 0) {
-      return product?.price || 0;
-    }
+    const priceDisplay = useMemo(() => {
+      if (!sizeDetails.length) return price ?? 0;
+      const prices = sizeDetails.map((s) => s.price).filter((p) => p != null);
+      if (!prices.length) return price ?? 0;
+      const unique = [...new Set(prices)];
+      if (unique.length === 1) return unique[0];
+      return `${Math.min(...prices)}-${Math.max(...prices)}`;
+    }, [sizeDetails, price]);
 
-    // Get all prices from size details
-    const prices = product.sizeDetails
-      .map((size) => size.price)
-      .filter((price) => price != null);
-
-    if (prices.length === 0) {
-      return product?.price || 0;
-    }
-
-    // Check if all prices are the same
-    const uniquePrices = [...new Set(prices)];
-
-    if (uniquePrices.length === 1) {
-      // All sizes have same price
-      return uniquePrices[0];
-    } else {
-      // Different prices - show range
-      const minPrice = Math.min(...prices);
-      const maxPrice = Math.max(...prices);
-      return `${minPrice}-${maxPrice}`;
-    }
-  }, [product?.sizeDetails, product?.price]);
-
-  // Memoize default price calculation
-  const defaultPrice = useMemo(() => {
-    return product?.sizeDetails && product.sizeDetails.length > 0
-      ? product.sizeDetails[0].price
-      : product?.price || 0;
-  }, [product?.sizeDetails, product?.price]);
-
-  // Modal state
-  const [modalOpen, setModalOpen] = useState(false);
-
-  // Memoize initial color and size values
-  const initialColor = useMemo(
-    () => product.colors?.[0]?.name || '',
-    [product.colors]
-  );
-  const initialSize = useMemo(
-    () => product.sizeDetails?.[0]?.sizeName || '',
-    [product.sizeDetails]
-  );
-
-  const [selectedColor, setSelectedColor] = useState(initialColor);
-  const [selectedSize, setSelectedSize] = useState(initialSize);
-  const [quantity, setQuantity] = useState(1);
-
-  // Memoize sizes and colors arrays
-  const sizes = useMemo(
-    () => product.sizeDetails?.map((s) => s.sizeName) || [],
-    [product.sizeDetails]
-  );
-  const colors = useMemo(() => product.colors || [], [product.colors]);
-
-  // Memoize max quantity calculation
-  const maxQty = useMemo(() => {
-    const sizeDetail = product.sizeDetails?.find(
-      (s) => s.sizeName === selectedSize
+    const defaultPrice = useMemo(
+      () => (sizeDetails.length ? sizeDetails[0].price : (price ?? 0)),
+      [sizeDetails, price]
     );
-    if (!sizeDetail) return 10;
-    const q = sizeDetail.quantities?.find((q) => q.colorName === selectedColor);
-    return q?.quantity || 10;
-  }, [product.sizeDetails, selectedSize, selectedColor]);
 
-  // Memoize parsed quantity to avoid recalculation
-  const parsedQuantity = useMemo(() => {
-    return typeof product.quantity === 'string'
-      ? parseInt(product.quantity.trim(), 10)
-      : product.quantity;
-  }, [product.quantity]);
+    const [modalOpen, setModalOpen] = useState(false);
+    const initialColor = useMemo(() => colors[0]?.name || '', [colors]);
+    const initialSize = useMemo(
+      () => sizeDetails[0]?.sizeName || '',
+      [sizeDetails]
+    );
+    const [selectedColor, setSelectedColor] = useState(initialColor);
+    const [selectedSize, setSelectedSize] = useState(initialSize);
+    const [quantity, setQuantity] = useState(1);
 
-  // Memoize getImagePath function
-  const getImagePath = useCallback((imageName) => {
-    return imageName;
-  }, []);
+    const sizes = useMemo(
+      () => sizeDetails.map((s) => s.sizeName),
+      [sizeDetails]
+    );
 
-  // Optimize color selection handler
-  const handleColorSelect = useCallback(
-    (color) => {
-      const sizeDetail = product.sizeDetails?.find(
-        (s) => s.sizeName === selectedSize
+    const maxQty = useMemo(() => {
+      const sd = sizeDetails.find((s) => s.sizeName === selectedSize);
+      const q = sd?.quantities?.find(
+        (q) => q.colorName.trim() === selectedColor.trim()
       );
-      let matchedColorName = color.name;
-      if (sizeDetail && sizeDetail.quantities) {
-        const found = sizeDetail.quantities.find(
+      return q?.quantity || 10;
+    }, [sizeDetails, selectedSize, selectedColor]);
+
+    const handleColorSelect = useCallback(
+      (color) => {
+        const sd = sizeDetails.find((s) => s.sizeName === selectedSize);
+        let matched = color.name;
+        const found = sd?.quantities?.find(
           (q) => q.colorName.trim() === color.name.trim()
         );
-        if (found) matchedColorName = found.colorName;
-      }
-      setSelectedColor(matchedColorName);
-      setImageLoaded(false);
-      setPhoto(getImagePath(color.imgColor));
-    },
-    [product.sizeDetails, selectedSize, getImagePath]
-  );
-
-  // Optimize add to cart handler
-  const handleAddToCart = useCallback(() => {
-    const sizeDetail = product.sizeDetails?.find(
-      (s) => s.sizeName === selectedSize
+        if (found) matched = found.colorName;
+        setSelectedColor(matched);
+        setImageLoaded(false);
+        setPhoto(color.imgColor);
+      },
+      [sizeDetails, selectedSize]
     );
-    let matchedColorName = selectedColor;
-    let availableQuantity = 1;
-    if (sizeDetail && sizeDetail.quantities) {
-      const found = sizeDetail.quantities.find(
+
+    const handleAddToCart = useCallback(() => {
+      const sd = sizeDetails.find((s) => s.sizeName === selectedSize);
+      let matched = selectedColor;
+      let availableQuantity = 1;
+      const found = sd?.quantities?.find(
         (q) => q.colorName.trim() === selectedColor.trim()
       );
       if (found) {
-        matchedColorName = found.colorName;
+        matched = found.colorName;
         availableQuantity = found.quantity;
       }
-    }
-    // Extract available sizes and colors
-    const availableSizes =
-      product.sizeDetails?.map((size) => size.sizeName) || [];
-    const availableColors = product.colors?.map((color) => color.name) || [];
 
-    addItem({
-      ...product,
-      productId: product.id,
-      sizeName: selectedSize,
-      colorName: matchedColorName,
-      quantity: availableQuantity,
-      qty: quantity,
-      image: photo,
-      price: defaultPrice,
-      availableSizes,
-      availableColors,
-    });
-    addToast({
-      title: 'تمت الإضافة!',
-      description: `تم إضافة المنتج (${product.name}) إلى السلة بنجاح.`,
-    });
-    setModalOpen(false);
-  }, [
-    product,
-    selectedSize,
-    selectedColor,
-    quantity,
-    photo,
-    defaultPrice,
-    addItem,
-    addToast,
-  ]);
+      const availableSizes = sizeDetails.map((s) => s.sizeName);
+      const availableColors = colors.map((c) => c.name);
 
-  // Memoize image load handlers
-  const handleImageLoad = useCallback(() => setImageLoaded(true), []);
-  const handleImageError = useCallback(() => setImageLoaded(true), []);
+      addItem({
+        productId: id,
+        name,
+        sizeName: selectedSize,
+        colorName: matched,
+        quantity: availableQuantity,
+        qty: quantity,
+        image: photo,
+        price: defaultPrice,
+        availableSizes,
+        availableColors,
+      });
+      addToast({
+        title: 'تمت الإضافة!',
+        description: `تم إضافة المنتج (${name}) إلى السلة بنجاح.`,
+      });
+      setModalOpen(false);
+    }, [
+      id,
+      name,
+      selectedSize,
+      selectedColor,
+      quantity,
+      photo,
+      defaultPrice,
+      sizeDetails,
+      colors,
+      addItem,
+      addToast,
+    ]);
 
-  return (
-    <ProductStyled>
-      <Column>
-        <Link to={`/product/${product.id}`} className='flex justify-center'>
-          {/* {!imageLoaded && <ImageLoading />} */}
-          <ImgProductSlider
-            src={photo}
-            alt={product.name}
-            imageloaded={imageLoaded.toString()}
-            loading='lazy'
-            onLoad={handleImageLoad}
-            onError={handleImageError}
+    const handleImageLoad = useCallback(() => setImageLoaded(true), []);
+    const handleImageError = useCallback(() => setImageLoaded(true), []);
+
+    return (
+      <ProductStyled>
+        <Column>
+          <Link to={`/product/${id}`} className='flex justify-center'>
+            <ImgProductSlider
+              src={photo}
+              alt={name}
+              imageloaded={imageLoaded.toString()}
+              loading='lazy'
+              onLoad={handleImageLoad}
+              onError={handleImageError}
+            />
+          </Link>
+          <ScrollColorImg>
+            {colors.map((color) => {
+              const imageUrl = color.imgColor;
+              const isSelected = photo === imageUrl;
+              return (
+                <ColorOption
+                  key={color.name}
+                  color={color}
+                  imageUrl={imageUrl}
+                  isSelected={isSelected}
+                  productName={name}
+                  onColorSelect={handleColorSelect}
+                />
+              );
+            })}
+          </ScrollColorImg>
+        </Column>
+
+        <Column>
+          <Span
+            className='w-full overflow-hidden text-ellipsis whitespace-nowrap text-right font-Lato text-[18px] font-normal leading-normal text-black dark:text-white md:text-[20px]'
+            dir='rtl'
+          >
+            {name}
+          </Span>
+          <Row dir='rtl' className='gap-1'>
+            <img src='/Layer_1.svg' alt='' className='mb-[2px] w-3 self-end' />
+            <span className='font-NotoSerif text-[25px] font-semibold text-gray-800 drop-shadow dark:text-white'>
+              {priceDisplay}
+            </span>
+          </Row>
+          <ButtonCard
+            type='button'
+            onClick={(e) => {
+              e.preventDefault();
+              setModalOpen(true);
+            }}
+            className='group'
+          >
+            <span className='font-Lato text-black transition-colors dark:text-white dark:group-hover:text-white'>
+              أضف الى السلة
+            </span>
+            <MdAddShoppingCart className='h-5 w-5 text-blue-600 transition-colors group-hover:fill-blue-600 dark:fill-white dark:text-white dark:group-hover:fill-white' />
+          </ButtonCard>
+        </Column>
+
+        {/* Modal */}
+        {modalOpen && (
+          <ProductModal
+            product={product}
+            photo={photo}
+            priceDisplay={priceDisplay}
+            colors={colors}
+            sizes={sizes}
+            selectedColor={selectedColor}
+            selectedSize={selectedSize}
+            quantity={quantity}
+            maxQty={maxQty}
+            getImagePath={getImagePath}
+            onColorSelect={handleColorSelect}
+            onSizeSelect={setSelectedSize}
+            onQuantityChange={setQuantity}
+            onAddToCart={handleAddToCart}
+            onClose={() => setModalOpen(false)}
           />
-        </Link>
-        <ScrollColorImg>
-          {colors.map((color, index) => {
-            const imageUrl = getImagePath(color.imgColor);
-            const isSelected = photo === imageUrl;
-            return (
-              <ColorOption
-                key={color.name}
-                color={color}
-                imageUrl={imageUrl}
-                isSelected={isSelected}
-                productName={product.name}
-                onColorSelect={handleColorSelect}
-              />
-            );
-          })}
-        </ScrollColorImg>
-      </Column>
-      <Column>
-        <Span
-          className='w-full overflow-hidden text-ellipsis whitespace-nowrap text-right font-Lato text-[18px] font-normal leading-normal text-black dark:text-white md:text-[20px]'
-          dir='rtl'
-        >
-          {product.name}
-        </Span>
-        <Row dir='rtl' className='gap-1'>
-          <img src='/Layer_1.svg' alt='' className='mb-[2px] w-3 self-end' />
-          <span className='font-NotoSerif text-[25px] font-semibold text-gray-800 drop-shadow dark:text-white'>
-            {priceDisplay}
-          </span>
-        </Row>
-        <ButtonCard
-          type='button'
-          onClick={(e) => {
-            e.preventDefault();
-            setModalOpen(true);
-          }}
-          className='group'
-        >
-          <span className='font-Lato text-black transition-colors dark:text-white dark:group-hover:text-white'>
-            أضف الى السلة
-          </span>
-          <MdAddShoppingCart className='h-5 w-5 text-blue-600 transition-colors group-hover:fill-blue-600 dark:fill-white dark:text-white dark:group-hover:fill-white' />
-        </ButtonCard>
-      </Column>
+        )}
+      </ProductStyled>
+    );
+  },
+  (prev, next) => {
+    if (prev.id !== next.id) return false;
+    if (prev.price !== next.price) return false;
+    if (prev.imgCover !== next.imgCover) return false;
 
-      {/* Modal */}
-      {modalOpen && (
-        <ProductModal
-          product={product}
-          photo={photo}
-          priceDisplay={priceDisplay}
-          colors={colors}
-          sizes={sizes}
-          selectedColor={selectedColor}
-          selectedSize={selectedSize}
-          quantity={quantity}
-          maxQty={maxQty}
-          getImagePath={getImagePath}
-          onColorSelect={handleColorSelect}
-          onSizeSelect={setSelectedSize}
-          onQuantityChange={setQuantity}
-          onAddToCart={handleAddToCart}
-          onClose={() => setModalOpen(false)}
-        />
-      )}
-    </ProductStyled>
-  );
-});
+    // compare arrays by stable keys
+    const colorsEqual = shallowEqualBy(
+      prev.colors,
+      next.colors,
+      (c) => `${c.name}|${c.imgColor}`
+    );
+    if (!colorsEqual) return false;
+
+    const sizesEqual = shallowEqualBy(
+      prev.sizeDetails,
+      next.sizeDetails,
+      (s) => `${s.sizeName}|${s.price}|${s.quantities?.length ?? 0}`
+    );
+    if (!sizesEqual) return false;
+
+    return true; // props effectively same → skip re-render
+  }
+);
 
 // Separate ColorOption component to reduce re-renders
 const ColorOption = memo(function ColorOption({
