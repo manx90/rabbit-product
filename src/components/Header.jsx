@@ -19,8 +19,8 @@ export default function Header({ openInfo, setOpenInfo }) {
 
   return (
     <Column>
-      <div className='flex flex-col bg-white  shadow-sm transition-all dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 dark:shadow-lg'>
-        <div className='align-center flex justify-between border-b border-[#D9D9D9] p-[16px] py-[4px] dark:border-gray-700/70 dark:text-white lg:px-32 h-16'>
+      <div className='flex flex-col bg-white shadow-sm transition-all dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 dark:shadow-lg'>
+        <div className='align-center flex h-16 justify-between border-b border-[#D9D9D9] p-[16px] py-[4px] dark:border-gray-700/70 dark:text-white lg:px-32'>
           <Link to='/'>
             <img
               src={isDark ? '/LogoTwo.svg' : '/logoOne.svg'}

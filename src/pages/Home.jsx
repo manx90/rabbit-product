@@ -11,7 +11,7 @@ export default function Home() {
   const [Menubar] = useState(false);
 
   return (
-    <>
+    <div className='mt-12 md:mt-0'>
       <SecondaryHeader />
       {!Menubar && (
         <>
@@ -129,7 +129,7 @@ export default function Home() {
         </>
       )}
       <SideBar Menubar={Menubar} />
-    </>
+    </div>
   );
 }
 

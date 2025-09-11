@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCategories } from '@/hooks/useCategories';
 
-export default function SideBar({ Menubar }) {
+export default function SideBar({ Menubar, setMenubar }) {
   const [Subside, setSubside] = useState(false);
   const [openCategory, setOpenCategory] = useState(null);
 
@@ -48,7 +48,9 @@ export default function SideBar({ Menubar }) {
             className='group overflow-hidden rounded-md transition-shadow duration-300 hover:shadow-lg'
           >
             <button
-              onClick={() => handleAccordion(val.id)}
+              onClick={() => {
+                handleAccordion(val.id);
+              }}
               className={`flex w-full flex-row-reverse items-center justify-between border-b border-[#E6F0FA] bg-gradient-to-l from-[#f7fbff] via-white to-[#f7fbff] p-5 text-right font-Lato transition-colors duration-300 focus:outline-none dark:border-[#1a2630] dark:from-[#1a2630] dark:via-[#18181b] dark:to-[#1a2630] ${
                 openCategory === val.id
                   ? 'bg-[#f0f8ff] shadow-inner dark:bg-[#1a2630]'
@@ -86,7 +88,6 @@ export default function SideBar({ Menubar }) {
                 </svg>
               </span>
             </button>
-
             {/* Accordion content: subcategories */}
             {openCategory === val.id && (
               <div className='animate-fadeIn border-b border-[#E6F0FA] bg-gradient-to-l from-[#f7fbff] via-[#fdfefe] to-[#fff] dark:border-[#1a2630] dark:from-[#1a2630] dark:via-[#232326] dark:to-[#18181b]'>
@@ -94,6 +95,9 @@ export default function SideBar({ Menubar }) {
                   val.subCategories.map((sub, subIdx) => (
                     <Link
                       key={sub.id}
+                      onClick={() => {
+                        setMenubar(false);
+                      }}
                       to={`/category/${val.id}/${sub.id}`}
                       className='relative block px-10 py-3 text-right font-Lato text-[15px] text-gray-700 transition-all duration-200 hover:bg-[#d0eaff] hover:pl-12 dark:text-gray-200 dark:hover:bg-[#232326]'
                     >

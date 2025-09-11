@@ -24,23 +24,11 @@ export default function CategoryPage() {
   const isLoading = subcategoriesLoading || productsLoading;
   const error = subcategoriesError || productsError;
 
-  // Debug logging
-  console.log('CategoryPage Debug:', {
-    categoryId,
-    subcategoryId,
-    products,
-    productsLoading,
-    productsError,
-    subcategories,
-    subcategoriesLoading,
-    subcategoriesError,
-  });
-
   return (
     <>
       {/* <Announcement /> */}
 
-      <div className='lg:mx-24'>
+      <div className='mt-[45px] md:mt-0 lg:mx-24'>
         <div dir='rtl' className='px-4'>
           <div className='custom-scrollbar flex flex-row gap-2 overflow-x-auto px-4 py-2 lg:justify-center lg:px-0'>
             {subcategories.map((subcategory) => (

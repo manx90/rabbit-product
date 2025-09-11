@@ -10,7 +10,7 @@ const Layout = ({ children }) => {
       <header className='fixed left-0 right-0 top-0 z-50 shadow-md dark:bg-slate-900'>
         <Header openInfo={openInfo} setOpenInfo={setOpenInfo} />
       </header>
-      <main className='mt-[70px] md:mt-[70px]'>{children}</main>
+      <main className='mt-[75px] md:mt-[70px]'>{children}</main>
       <Cart openInfo={openInfo} setOpenInfo={setOpenInfo} />
       <Footer />
     </div>
