@@ -9,7 +9,7 @@ lerna-debug.log*
 .prettierrc
 .prettierrc.js
 node_modules
-dist
+# dist
 dist-ssr
 *.local
 
