@@ -1,14 +1,13 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Product as ProductAPI } from '@/api/productAPI';
 
-// Utility to prefix image URLs
+// Utility to return image URLs as fetched (no prefixing)
 function prefixImgUrl(url) {
-  if (!url) return '';
-  if (url.startsWith('http')) return url;
-  return `${import.meta.env.VITE_RABBIT_PI_BASE_URL}/uploads/${url}`;
+  console.log(url);
+  return url || '';
 }
 
-// Function to process product data (same as used in other hooks)
+// Function to process product data (no prefixing)
 function processProductData(product) {
   const images = (product.images || []).map(prefixImgUrl);
   const imgCover = prefixImgUrl(product.imgCover);

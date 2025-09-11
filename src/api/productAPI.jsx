@@ -4,7 +4,7 @@ import axiosClient from './axiosClient';
 const mainDirection = '/product';
 
 export class Product {
-  static getAll = async (params = { limit: 200 }) => {
+  static getAll = async (params = { limit: 100 }) => {
     try {
       const response = await axiosClient.get(`${mainDirection}`, { params });
       return response;

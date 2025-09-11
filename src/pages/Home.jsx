@@ -1,202 +1,130 @@
 import SecondaryHeader from '@/components/SeconderyHeader';
 import SideBar from '@/components/SideBar';
-import { useHomeProducts } from '@/features/Home/useProduct';
+import { useCollection } from '@/hooks/useCollection';
 import React, { useState } from 'react';
 import Category from '../components/category';
 import { ProductSlider } from '../components/ProductSlider';
 
-const demoStories = [
-  {
-    id: 1,
-    user: {
-      name: 'Alice',
-      avatar:
-        'https://api.rabbit.ps/uploads/products/حمالة_صدر_كتف_عريض_01/colors/eef7fb9a-949f-4998-98f7-454c271a4435.jpg',
-    },
-    content: {
-      type: 'image',
-      url: 'https://api.rabbit.ps/uploads/products/حمالة_صدر_كتف_عريض_01/colors/eef7fb9a-949f-4998-98f7-454c271a4435.jpg',
-    },
-    liked: false,
-  },
-  {
-    id: 2,
-    user: {
-      name: 'Bob',
-      avatar:
-        'https://api.rabbit.ps/uploads/products/%D8%A8%D8%AC%D8%A7%D9%85%D8%A9_%D8%AB%D9%84%D8%A7%D8%AB_%D9%82%D8%B7%D8%B9_018/colors/7f69d9e5-4852-465c-a3ac-a08632e9e4fd.jpg',
-    },
-    content: {
-      type: 'image',
-      url: 'https://api.rabbit.ps/uploads/products/%D8%A8%D8%AC%D8%A7%D9%85%D8%A9_%D8%AB%D9%84%D8%A7%D8%AB_%D9%82%D8%B7%D8%B9_018/colors/7f69d9e5-4852-465c-a3ac-a08632e9e4fd.jpg',
-    },
-    liked: false,
-  },
-  {
-    id: 3,
-    user: {
-      name: 'Carol',
-      avatar:
-        'https://api.rabbit.ps/uploads/products/%D8%A8%D8%AC%D8%A7%D9%85%D8%A9_%D8%AB%D9%84%D8%A7%D8%AB_%D9%82%D8%B7%D8%B9_018/colors/7f69d9e5-4852-465c-a3ac-a08632e9e4fd.jpg',
-    },
-    content: {
-      type: 'image',
-      url: 'https://api.rabbit.ps/uploads/products/%D8%A8%D8%AC%D8%A7%D9%85%D8%A9_%D8%AB%D9%84%D8%A7%D8%AB_%D9%82%D8%B7%D8%B9_018/colors/7f69d9e5-4852-465c-a3ac-a08632e9e4fd.jpg',
-    },
-    liked: false,
-  },
-  {
-    id: 5,
-    user: {
-      name: 'Carol',
-      avatar:
-        'https://api.rabbit.ps/uploads/products/%D8%A8%D8%AC%D8%A7%D9%85%D8%A9_%D8%AB%D9%84%D8%A7%D8%AB_%D9%82%D8%B7%D8%B9_018/colors/7f69d9e5-4852-465c-a3ac-a08632e9e4fd.jpg',
-    },
-    content: {
-      type: 'image',
-      url: './1600.jpg',
-    },
-    liked: false,
-  },
-  {
-    id: 4,
-    user: {
-      name: 'Carol',
-      avatar:
-        'https://api.rabbit.ps/uploads/products/%D8%A8%D8%AC%D8%A7%D9%85%D8%A9_%D8%AB%D9%84%D8%A7%D8%AB_%D9%82%D8%B7%D8%B9_018/colors/7f69d9e5-4852-465c-a3ac-a08632e9e4fd.jpg',
-    },
-    content: {
-      type: 'image',
-      url: 'https://api.rabbit.ps/uploads/products/%D8%A8%D8%AC%D8%A7%D9%85%D8%A9_%D8%AB%D9%84%D8%A7%D8%AB_%D9%82%D8%B7%D8%B9_018/colors/7f69d9e5-4852-465c-a3ac-a08632e9e4fd.jpg',
-    },
-    liked: false,
-  },
-  {
-    id: 4,
-    user: {
-      name: 'Carol',
-      avatar:
-        'https://api.rabbit.ps/uploads/products/%D8%A8%D8%AC%D8%A7%D9%85%D8%A9_%D8%AB%D9%84%D8%A7%D8%AB_%D9%82%D8%B7%D8%B9_018/colors/7f69d9e5-4852-465c-a3ac-a08632e9e4fd.jpg',
-    },
-    content: {
-      type: 'image',
-      url: 'https://api.rabbit.ps/uploads/products/%D8%A8%D8%AC%D8%A7%D9%85%D8%A9_%D8%AB%D9%84%D8%A7%D8%AB_%D9%82%D8%B7%D8%B9_018/colors/7f69d9e5-4852-465c-a3ac-a08632e9e4fd.jpg',
-    },
-    liked: false,
-  },
-  {
-    id: 6,
-    user: {
-      name: 'Carol',
-      avatar:
-        'https://api.rabbit.ps/uploads/products/%D8%A8%D8%AC%D8%A7%D9%85%D8%A9_%D8%AB%D9%84%D8%A7%D8%AB_%D9%82%D8%B7%D8%B9_018/colors/7f69d9e5-4852-465c-a3ac-a08632e9e4fd.jpg',
-    },
-    content: {
-      type: 'image',
-      url: 'https://api.rabbit.ps/uploads/products/%D8%A8%D8%AC%D8%A7%D9%85%D8%A9_%D8%AB%D9%84%D8%A7%D8%AB_%D9%82%D8%B7%D8%B9_018/colors/7f69d9e5-4852-465c-a3ac-a08632e9e4fd.jpg',
-    },
-    liked: false,
-  },
-  {
-    id: 7,
-    user: {
-      name: 'Carol',
-      avatar:
-        'https://api.rabbit.ps/uploads/products/%D8%A8%D8%AC%D8%A7%D9%85%D8%A9_%D8%AB%D9%84%D8%A7%D8%AB_%D9%82%D8%B7%D8%B9_018/colors/7f69d9e5-4852-465c-a3ac-a08632e9e4fd.jpg',
-    },
-    content: {
-      type: 'image',
-      url: 'https://api.rabbit.ps/uploads/products/%D8%A8%D8%AC%D8%A7%D9%85%D8%A9_%D8%AB%D9%84%D8%A7%D8%AB_%D9%82%D8%B7%D8%B9_018/colors/7f69d9e5-4852-465c-a3ac-a08632e9e4fd.jpg',
-    },
-    liked: false,
-  },
-];
-
 export default function Home() {
-  const [Menubar, setMenubar] = useState(false);
-  const { product: products, isLoading: loading, error } = useHomeProducts();
-  const [stories, setStories] = useState(demoStories);
-  const [openStory, setOpenStory] = useState(null);
-
-  // Group products by category
-  // Group products by both category and subcategory for each product
-  // Group products by subcategory, and include categoryId and subCategoryId for each group
-  const groupedProducts = products.reduce((acc, product) => {
-    const categoryId = product.category?.id || 'غير مصنف';
-    const categoryName = product.category?.name || 'غير مصنف';
-    const subCategoryId =
-      product.subCategory?.id || product.subCategoryId || 'غير مصنف';
-    const subCategoryName =
-      product.subCategory?.name || product.subCategory || 'غير مصنف';
-
-    // Use subCategoryId as the key if available, otherwise subCategoryName
-    const groupKey =
-      subCategoryId !== 'غير مصنف' ? subCategoryId : subCategoryName;
-
-    if (!acc[groupKey]) {
-      acc[groupKey] = {
-        categoryId,
-        categoryName,
-        subCategoryId,
-        subCategoryName,
-        products: [],
-      };
-    }
-    acc[groupKey].products.push(product);
-    // Removed invalid debug statement
-    return acc;
-  }, {});
-
-  const handleOpenStory = (story) => setOpenStory(story);
-  const handleCloseStory = () => setOpenStory(null);
-  const handleLike = (id) => {
-    setStories((prev) =>
-      prev.map((s) => (s.id === id ? { ...s, liked: !s.liked } : s))
-    );
-    if (openStory && openStory.id === id) {
-      setOpenStory((prev) => ({
-        ...prev,
-        liked: !prev.liked,
-      }));
-    }
-  };
+  const { data: Collections, isLoading, error } = useCollection();
+  console.log(Collections);
+  const [Menubar] = useState(false);
 
   return (
     <>
       <SecondaryHeader />
       {!Menubar && (
         <>
-          <Announcement />
+          {/* <Announcement /> */}
           <NoteScrolling />
 
-          {loading ? (
+          {isLoading ? (
             <div className='flex min-h-[200px] items-center justify-center'>
-              <span className='text-gray-500'>جاري تحميل المنتجات...</span>
+              <span className='text-gray-500'>جاري تحميل البيانات...</span>
             </div>
           ) : error ? (
             <div className='flex min-h-[200px] items-center justify-center'>
               <span className='text-red-500'>{error}</span>
             </div>
           ) : (
-            Object.entries(groupedProducts).map(([groupKey, group]) => (
-              <React.Fragment key={groupKey}>
-                <div className='mb-8 lg:mx-12'>
+            Collections?.data?.map((collection) => {
+              const collectionProducts = collection.products || [];
+
+              // If collection has subcategories, show them
+              if (
+                collection.subCategories &&
+                collection.subCategories.length > 0
+              ) {
+                return collection.subCategories.map((subCat) => (
+                  <div className='mb-8 lg:mx-12' key={`subcat-${subCat.id}`}>
+                    <Category
+                      name={subCat.name}
+                      idSub={subCat.id}
+                      idCat={collection.categories?.[0]?.id || 'غير معروف'}
+                      all={true}
+                    />
+                    {collectionProducts.length > 0 ? (
+                      <ProductSlider
+                        products={collectionProducts}
+                        subCategoryId={subCat.id}
+                        subCategoryName={subCat.name}
+                        categoryId={
+                          collection.categories?.[0]?.id || 'غير معروف'
+                        }
+                        categoryName={
+                          collection.categories?.[0]?.name || 'غير معروف'
+                        }
+                      />
+                    ) : (
+                      <div className='flex min-h-[200px] items-center justify-center'>
+                        <span className='text-gray-500'>
+                          لا توجد منتجات في هذه الفئة
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                ));
+              }
+
+              // If collection has no subcategories but has categories, show the category directly
+              if (collection.categories && collection.categories.length > 0) {
+                return collection.categories.map((category) => (
+                  <div className='mb-8 lg:mx-12' key={`cat-${category.id}`}>
+                    <Category
+                      name={category.name}
+                      idSub={null}
+                      idCat={category.id}
+                      all={true}
+                    />
+                    {collectionProducts.length > 0 ? (
+                      <ProductSlider
+                        products={collectionProducts}
+                        subCategoryId={null}
+                        subCategoryName={category.name}
+                        categoryId={category.id}
+                        categoryName={category.name}
+                      />
+                    ) : (
+                      <div className='flex min-h-[200px] items-center justify-center'>
+                        <span className='text-gray-500'>
+                          لا توجد منتجات في هذه الفئة
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                ));
+              }
+
+              // If collection has neither subcategories nor categories, show collection name
+              return (
+                <div
+                  className='mb-8 lg:mx-12'
+                  key={`collection-${collection.id}`}
+                >
                   <Category
-                    name={group.subCategoryName}
-                    idSub={group.subCategoryId}
-                    idCat={group.categoryId}
+                    name={collection.name}
+                    idSub={null}
+                    idCat={collection.id}
                     all={true}
                   />
-                  <ProductSlider
-                    products={group.products}
-                    subCategoryId={group.subCategoryId}
-                    subCategoryName={group.subCategoryName}
-                    categoryId={group.categoryId}
-                    categoryName={group.categoryName}
-                  />
+                  {collectionProducts.length > 0 ? (
+                    <ProductSlider
+                      products={collectionProducts}
+                      subCategoryId={null}
+                      subCategoryName={collection.name}
+                      categoryId={collection.id}
+                      categoryName={collection.name}
+                    />
+                  ) : (
+                    <div className='flex min-h-[200px] items-center justify-center'>
+                      <span className='text-gray-500'>
+                        لا توجد منتجات في هذه الفئة
+                      </span>
+                    </div>
+                  )}
                 </div>
-              </React.Fragment>
-            ))
+              );
+            })
           )}
         </>
       )}
@@ -285,7 +213,7 @@ function NoteScrolling() {
               key={idx}
               src={src}
               alt={`Promotion Banner ${idx + 1}`}
-              className={`absolute left-0 top-0 h-full w-full transition-opacity duration-700 ease-in-out ${
+              className={`absolute left-0 top-0 size-full transition-opacity duration-700 ease-in-out ${
                 current === idx
                   ? 'pointer-events-auto z-10 opacity-100'
                   : 'pointer-events-none z-0 opacity-0'

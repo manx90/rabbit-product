@@ -1,33 +1,20 @@
 import { Optos } from '@/api/optosApi';
 import { useCart } from '@/hooks/useCartRedux';
-import { useFavorites } from '@/hooks/useFavorites';
 import useOrder from '@/hooks/useOrder';
 import { Input } from '@/lib/css/Cart';
+import SelectAntd from './SelectAntd';
 import { Column, Row } from '@/lib/css/Product';
+import { useToastContext } from '@/components/ui/toast';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { FaMoneyCheck } from 'react-icons/fa';
-import { MdDeleteForever } from 'react-icons/md';
+import { MdDeleteForever } from '@react-icons/all-files/md/MdDeleteForever';
+import { BiShekel } from '@react-icons/all-files/bi/BiShekel';
+
 import SelectingCart from './selectingCart';
 export default function Cart({ openInfo, setOpenInfo }) {
-  const { items, updateItemQuantity, toggleItemFavorite, removeItemByIndex } =
-    useCart();
-  const { toggleFavorite, favorites } = useFavorites();
-
-  const isItemInFavorites = (item) => {
-    return favorites.some(
-      (fav) =>
-        fav.productId === item.productId &&
-        fav.sizeName === item.sizeName &&
-        fav.colorName === item.colorName
-    );
-  };
-
-  const handleFavoriteToggle = (item, index) => {
-    toggleItemFavorite(index);
-    toggleFavorite(item);
-  };
+  const { items, updateItemQuantity, removeItemByIndex, clearCart } = useCart();
 
   useEffect(() => {
     document.body.style.overflow = openInfo ? 'hidden' : 'auto';
@@ -125,7 +112,7 @@ export default function Cart({ openInfo, setOpenInfo }) {
                           <Row className='gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-all duration-200 hover:border-gray-300 hover:shadow-sm dark:border-gray-700/50 dark:bg-gray-800/50 dark:hover:border-gray-600'>
                             <div className='relative flex flex-shrink-0 items-center justify-center'>
                               <img
-                                src={item.image}
+                                src={`${import.meta.env.VITE_RABBIT_PI_BASE_URL}/uploads/${item.image}`}
                                 alt={item.name}
                                 className='my-auto h-8 w-8 rounded-md bg-gray-200 object-contain dark:bg-gray-700'
                               />
@@ -142,7 +129,7 @@ export default function Cart({ openInfo, setOpenInfo }) {
                                   </span>
                                   <Row className='items-center'>
                                     <span className='line-clamp-2 text-xs font-medium leading-tight text-gray-900 dark:text-slate-400'>
-                                      {item.category.name}
+                                      {item.category?.name}
                                     </span>
                                     <Row className='h-fit gap-1'>
                                       <span className='line-clamp-2 rounded-full border border-gray-300 bg-blue-50 p-1 px-2 text-xs font-normal leading-tight text-blue-700 dark:border-gray-600 dark:bg-blue-900/30 dark:text-blue-300'>
@@ -246,15 +233,17 @@ export default function Cart({ openInfo, setOpenInfo }) {
                           المجموع (
                           {items.reduce((sum, item) => sum + item.qty, 0)} منتج)
                         </span>
-                        <span className='text-sm font-semibold text-gray-900 dark:text-white'>
-                          $
-                          {items
-                            .reduce(
-                              (sum, item) => sum + item.price * item.qty,
-                              0
-                            )
-                            .toFixed(2)}
-                        </span>
+                        <p className='flex text-sm font-semibold text-gray-900 dark:text-white'>
+                          <BiShekel className='w-4 self-end' />
+                          <span className='font-NotoSerif text-[20px]'>
+                            {items
+                              .reduce(
+                                (sum, item) => sum + item.price * item.qty,
+                                0
+                              )
+                              .toFixed(2)}
+                          </span>
+                        </p>
                       </div>
 
                       <button
@@ -278,13 +267,17 @@ export default function Cart({ openInfo, setOpenInfo }) {
             </div>
           </>
         ) : (
-          <CartPayment setIsPayment={setIsPayment} />
+          <CartPayment
+            setIsPayment={setIsPayment}
+            clearCart={clearCart}
+            setOpenInfo={setOpenInfo}
+          />
         )}
       </Column>
     </div>
   );
 }
-function CartPayment({ setIsPayment }) {
+function CartPayment({ setIsPayment, clearCart, setOpenInfo }) {
   const methods = useForm({
     defaultValues: {
       consignee_city: '', // مهم
@@ -295,6 +288,7 @@ function CartPayment({ setIsPayment }) {
     },
   });
   const { items } = useCart();
+  const { addToast } = useToastContext();
   const {
     register,
     handleSubmit,
@@ -315,7 +309,7 @@ function CartPayment({ setIsPayment }) {
     refetchAreas();
   }, [consignee_city]);
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const itemsData = items.map((item) => ({
       colorName: item.colorName,
       sizeName: item.sizeName,
@@ -324,7 +318,14 @@ function CartPayment({ setIsPayment }) {
     }));
     const Data = { ...data, items: itemsData };
     const { Res } = useOrder(Data);
-    Res();
+    await Res().then(() => {
+      clearCart();
+      addToast({
+        title: 'تم بنجاح!',
+        description: 'تم إرسال طلبك بنجاح وسيتم التواصل معك قريباً',
+      });
+      setOpenInfo(false);
+    });
     setIsPayment(false);
   };
 
@@ -376,14 +377,14 @@ function CartPayment({ setIsPayment }) {
 
           <Column>
             <label>المدينة</label>
-            <SelectingCart
+            <SelectAntd
               items={cities}
               placeholder='المدينة'
               registerName='consignee_city'
             />
 
             <label>المنطقة</label>
-            <SelectingCart
+            <SelectAntd
               items={areas}
               disabled={!consignee_city}
               placeholder='المنطقة'

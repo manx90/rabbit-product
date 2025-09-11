@@ -72,9 +72,9 @@ export default [
       // Better formatting rules
       'object-curly-spacing': ['error', 'always'],
       'array-bracket-spacing': ['error', 'never'],
-      'comma-dangle': ['error', 'always-multiline'],
+      'comma-dangle': ['error', 'es5'],
       quotes: ['error', 'single', { avoidEscape: true }],
-      'jsx-quotes': ['error', 'prefer-double'],
+      'jsx-quotes': ['error', 'prefer-single'],
     },
   },
 ];

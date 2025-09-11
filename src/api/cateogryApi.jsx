@@ -2,7 +2,8 @@ import axiosClient from './axiosClient';
 
 const mainDirection = '/category';
 export class Category {
-  static getAll = (params) => axiosClient.get(mainDirection, { params });
+  static getAll = (params) =>
+    axiosClient.get(`${mainDirection}/active`, { params });
   static getOne = (id) => axiosClient.get(`${mainDirection}/${id}`);
   static getSubCategory = () => axiosClient.get(`${mainDirection}/subCategory`);
   static createCategory = (formData) =>

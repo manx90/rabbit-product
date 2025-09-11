@@ -1,12 +1,12 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { lazy, Suspense } from 'react';
+import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Loading from './components/Loading';
 import ScrollToTop from './components/ScrollToTop';
-import { Provider } from 'react-redux';
-import { store } from './store/store';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Home from './pages/Home';
 import Layout from './pages/Layout';
+import { store } from './store/store';
 const CategoryPage = lazy(() => import('./pages/CategoryPage.jsx'));
 const ProductPage = lazy(() => import('./pages/ProductPage.jsx'));
 const FavoritePage = lazy(() => import('./pages/FavoritePage.jsx'));

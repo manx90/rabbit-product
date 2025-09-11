@@ -157,6 +157,7 @@ function SearchToggle({
                   className='cursor-pointer dark:hover:bg-slate-700'
                   onClick={() => {
                     navigate(`/product/${product.id}`);
+                    setOpen(false);
                   }}
                 >
                   <Row className='justify-between'>

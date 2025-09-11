@@ -5,11 +5,13 @@ import CloseIcon from '@mui/icons-material/Close';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCartOutlined';
 import Badge, { badgeClasses } from '@mui/material/Badge';
 import IconButton from '@mui/material/IconButton';
+
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Darkmode from './Darkmode';
 import SearchBox from './SearchBox';
+import { useCategories } from '@/hooks/useCategories';
 
 export default function Header({ openInfo, setOpenInfo }) {
   const [Menubar, setMenubar] = useState(false);
@@ -17,8 +19,8 @@ export default function Header({ openInfo, setOpenInfo }) {
 
   return (
     <Column>
-      <div className='flex flex-col bg-white shadow-sm transition-all dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 dark:shadow-lg'>
-        <div className='align-center flex justify-between border-b border-[#D9D9D9] p-[16px] py-[6px] dark:border-gray-700/70 dark:text-white lg:px-32'>
+      <div className='flex flex-col bg-white  shadow-sm transition-all dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 dark:shadow-lg'>
+        <div className='align-center flex justify-between border-b border-[#D9D9D9] p-[16px] py-[4px] dark:border-gray-700/70 dark:text-white lg:px-32 h-16'>
           <Link to='/'>
             <img
               src={isDark ? '/LogoTwo.svg' : '/logoOne.svg'}

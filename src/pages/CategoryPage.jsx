@@ -19,14 +19,26 @@ export default function CategoryPage() {
     isLoading: productsLoading,
     error: productsError,
   } = useCategoryProducts(categoryId, subcategoryId);
-
+  console.log(products);
   // Show loading state
   const isLoading = subcategoriesLoading || productsLoading;
   const error = subcategoriesError || productsError;
 
+  // Debug logging
+  console.log('CategoryPage Debug:', {
+    categoryId,
+    subcategoryId,
+    products,
+    productsLoading,
+    productsError,
+    subcategories,
+    subcategoriesLoading,
+    subcategoriesError,
+  });
+
   return (
     <>
-      <Announcement />
+      {/* <Announcement /> */}
 
       <div className='lg:mx-24'>
         <div dir='rtl' className='px-4'>
@@ -63,9 +75,47 @@ export default function CategoryPage() {
               لا توجد منتجات في هذا القسم.
             </div>
           ) : (
-            products.map((product, index) => (
-              <Product key={product.id || index} product={product} />
-            ))
+            products.map((product, index) => {
+              // Fix imgCover if it contains duplicated base URL
+              let fixedImgCover = product.imgCover;
+              if (
+                typeof fixedImgCover === 'string' &&
+                fixedImgCover.startsWith(
+                  `${import.meta.env.VITE_RABBIT_PI_BASE_URL}/uploads`
+                )
+              ) {
+                fixedImgCover = fixedImgCover.replace(
+                  `${import.meta.env.VITE_RABBIT_PI_BASE_URL}/uploads`,
+                  ''
+                );
+              }
+
+              // Fix colors imgColor URLs as well
+              const fixedColors =
+                product.colors?.map((color) => ({
+                  ...color,
+                  imgColor: color.imgColor?.startsWith(
+                    `${import.meta.env.VITE_RABBIT_PI_BASE_URL}/uploads`
+                  )
+                    ? color.imgColor.replace(
+                        `${import.meta.env.VITE_RABBIT_PI_BASE_URL}/uploads`,
+                        ''
+                      )
+                    : color.imgColor,
+                })) || [];
+
+              return (
+                <Product
+                  key={product.id || index}
+                  id={product.id}
+                  name={product.name}
+                  price={product.price}
+                  imgCover={fixedImgCover}
+                  colors={fixedColors}
+                  sizeDetails={product.sizeDetails}
+                />
+              );
+            })
           )}
         </div>
       </div>

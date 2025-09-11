@@ -116,13 +116,66 @@ export const Product = memo(
       [sizeDetails]
     );
 
+    // Get colors with availability info for selected size
+    const colorsWithAvailability = useMemo(() => {
+      if (!selectedSize)
+        return colors.map((color) => ({
+          ...color,
+          isAvailable: true,
+          quantity: 0,
+        }));
+      const sd = sizeDetails.find((s) => s.sizeName === selectedSize);
+      if (!sd?.quantities)
+        return colors.map((color) => ({
+          ...color,
+          isAvailable: true,
+          quantity: 0,
+        }));
+
+      return colors.map((color) => {
+        const q = sd.quantities.find(
+          (q) => q.colorName.trim() === color.name.trim()
+        );
+        return {
+          ...color,
+          isAvailable: q && q.quantity > 0,
+          quantity: q?.quantity || 0,
+        };
+      });
+    }, [colors, sizeDetails, selectedSize]);
+
+    // Get sizes with availability info for selected color
+    const sizesWithAvailability = useMemo(() => {
+      if (!selectedColor)
+        return sizes.map((size) => ({ size, isAvailable: true, quantity: 0 }));
+
+      return sizes.map((size) => {
+        const sd = sizeDetails.find((s) => s.sizeName === size);
+        if (!sd?.quantities) return { size, isAvailable: false, quantity: 0 };
+
+        const q = sd.quantities.find(
+          (q) => q.colorName.trim() === selectedColor.trim()
+        );
+        return {
+          size,
+          isAvailable: q && q.quantity > 0,
+          quantity: q?.quantity || 0,
+        };
+      });
+    }, [sizes, sizeDetails, selectedColor]);
+
     const maxQty = useMemo(() => {
       const sd = sizeDetails.find((s) => s.sizeName === selectedSize);
       const q = sd?.quantities?.find(
         (q) => q.colorName.trim() === selectedColor.trim()
       );
-      return q?.quantity || 10;
+      return q?.quantity || 0;
     }, [sizeDetails, selectedSize, selectedColor]);
+
+    // Check if current combination is available
+    const isCurrentCombinationAvailable = useMemo(() => {
+      return maxQty > 0;
+    }, [maxQty]);
 
     const handleColorSelect = useCallback(
       (color) => {
@@ -135,9 +188,54 @@ export const Product = memo(
         setSelectedColor(matched);
         setImageLoaded(false);
         setPhoto(color.imgColor);
+
+        // Reset quantity to 1 when color changes
+        setQuantity(1);
       },
       [sizeDetails, selectedSize]
     );
+
+    const handleSizeSelect = useCallback((size) => {
+      setSelectedSize(size);
+      // Reset quantity to 1 when size changes
+      setQuantity(1);
+    }, []);
+
+    // Auto-select available options when current selection becomes unavailable
+    useEffect(() => {
+      if (selectedSize) {
+        const currentSizeInfo = sizesWithAvailability.find(
+          (s) => s.size === selectedSize
+        );
+        if (currentSizeInfo && !currentSizeInfo.isAvailable) {
+          const availableSize = sizesWithAvailability.find(
+            (s) => s.isAvailable
+          );
+          if (availableSize) {
+            setSelectedSize(availableSize.size);
+            setQuantity(1);
+          }
+        }
+      }
+    }, [selectedSize, sizesWithAvailability]);
+
+    useEffect(() => {
+      if (selectedColor) {
+        const currentColorInfo = colorsWithAvailability.find(
+          (c) => c.name === selectedColor
+        );
+        if (currentColorInfo && !currentColorInfo.isAvailable) {
+          const availableColor = colorsWithAvailability.find(
+            (c) => c.isAvailable
+          );
+          if (availableColor) {
+            setSelectedColor(availableColor.name);
+            setPhoto(availableColor.imgColor);
+            setQuantity(1);
+          }
+        }
+      }
+    }, [selectedColor, colorsWithAvailability]);
 
     const handleAddToCart = useCallback(() => {
       const sd = sizeDetails.find((s) => s.sizeName === selectedSize);
@@ -193,7 +291,7 @@ export const Product = memo(
         <Column>
           <Link to={`/product/${id}`} className='flex justify-center'>
             <ImgProductSlider
-              src={photo}
+              src={`${import.meta.env.VITE_RABBIT_PI_BASE_URL}/uploads/${photo}`}
               alt={name}
               imageloaded={imageLoaded.toString()}
               loading='lazy'
@@ -209,7 +307,7 @@ export const Product = memo(
                 <ColorOption
                   key={color.name}
                   color={color}
-                  imageUrl={imageUrl}
+                  imageUrl={`${import.meta.env.VITE_RABBIT_PI_BASE_URL}/uploads/${imageUrl}`}
                   isSelected={isSelected}
                   productName={name}
                   onColorSelect={handleColorSelect}
@@ -250,18 +348,21 @@ export const Product = memo(
         {/* Modal */}
         {modalOpen && (
           <ProductModal
-            product={product}
+            product={{ id, name, price }}
             photo={photo}
             priceDisplay={priceDisplay}
-            colors={colors}
-            sizes={sizes}
+            colors={colorsWithAvailability}
+            sizes={sizesWithAvailability}
             selectedColor={selectedColor}
             selectedSize={selectedSize}
             quantity={quantity}
             maxQty={maxQty}
-            getImagePath={getImagePath}
+            isCurrentCombinationAvailable={isCurrentCombinationAvailable}
+            getImagePath={(imageName) =>
+              `${import.meta.env.VITE_RABBIT_PI_BASE_URL}/uploads/${imageName}`
+            }
             onColorSelect={handleColorSelect}
-            onSizeSelect={setSelectedSize}
+            onSizeSelect={handleSizeSelect}
             onQuantityChange={setQuantity}
             onAddToCart={handleAddToCart}
             onClose={() => setModalOpen(false)}
@@ -328,6 +429,7 @@ const ProductModal = memo(function ProductModal({
   selectedSize,
   quantity,
   maxQty,
+  isCurrentCombinationAvailable,
   getImagePath,
   onColorSelect,
   onSizeSelect,
@@ -373,18 +475,23 @@ const ProductModal = memo(function ProductModal({
   }, [watchedQuantity, quantity, onQuantityChange]);
 
   const onSubmit = (data) => {
+    if (!isCurrentCombinationAvailable || maxQty === 0) {
+      return;
+    }
     console.log(data);
     onAddToCart();
   };
 
   const handleColorSelect = (color) => {
+    if (!color.isAvailable) return; // Don't allow selection of unavailable colors
     setValue('color', color.name);
     onColorSelect(color);
   };
 
-  const handleSizeSelect = (size) => {
-    setValue('size', size);
-    onSizeSelect(size);
+  const handleSizeSelect = (sizeInfo) => {
+    if (!sizeInfo.isAvailable) return; // Don't allow selection of unavailable sizes
+    setValue('size', sizeInfo.size);
+    onSizeSelect(sizeInfo.size);
   };
 
   const handleQuantityChange = (newQuantity) => {
@@ -434,7 +541,7 @@ const ProductModal = memo(function ProductModal({
           >
             <div className='flex flex-col items-center gap-2'>
               <img
-                src={photo}
+                src={`${import.meta.env.VITE_RABBIT_PI_BASE_URL}/uploads/${photo}`}
                 alt={product.name}
                 className='h-24 w-24 rounded-lg border border-gray-200 object-contain shadow dark:border-gray-700'
               />
@@ -458,21 +565,37 @@ const ProductModal = memo(function ProductModal({
                   <button
                     type='button'
                     key={color.name || idx}
-                    className={`flex items-center gap-1 rounded-lg border px-2 py-1 transition-all ${
-                      watchedColor === color.name
-                        ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/40'
-                        : 'border-gray-200 dark:border-gray-700'
+                    disabled={!color.isAvailable}
+                    className={`relative flex items-center gap-1 rounded-lg border px-2 py-1 transition-all ${
+                      !color.isAvailable
+                        ? 'cursor-not-allowed border-gray-300 bg-gray-100 opacity-50 dark:border-gray-600 dark:bg-gray-800'
+                        : watchedColor === color.name
+                          ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/40'
+                          : 'border-gray-200 hover:border-gray-300 dark:border-gray-700'
                     }`}
                     onClick={() => handleColorSelect(color)}
                   >
                     <img
                       src={getImagePath(color.imgColor)}
                       alt={color.name}
-                      className='h-6 w-6 rounded-full border border-gray-300 object-cover dark:border-gray-600'
+                      className={`h-6 w-6 rounded-full border border-gray-300 object-cover dark:border-gray-600 ${
+                        !color.isAvailable ? 'grayscale' : ''
+                      }`}
                     />
-                    <span className='text-xs font-bold text-gray-700 dark:text-gray-200'>
+                    <span
+                      className={`text-xs font-bold ${
+                        !color.isAvailable
+                          ? 'text-gray-400 line-through dark:text-gray-500'
+                          : 'text-gray-700 dark:text-gray-200'
+                      }`}
+                    >
                       {color.name}
                     </span>
+                    {!color.isAvailable && (
+                      <span className='absolute -right-1 -top-1 text-xs font-bold text-red-500'>
+                        ✕
+                      </span>
+                    )}
                   </button>
                 ))}
               </div>
@@ -488,18 +611,26 @@ const ProductModal = memo(function ProductModal({
                 المقاس:
               </label>
               <div className='flex flex-row-reverse flex-wrap justify-end gap-2'>
-                {sizes.map((size, idx) => (
+                {sizes.map((sizeInfo, idx) => (
                   <button
                     type='button'
-                    key={size || idx}
-                    className={`rounded-lg border px-3 py-1 text-sm font-bold transition-all ${
-                      watchedSize === size
-                        ? 'border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-900/40 dark:text-blue-200'
-                        : 'border-gray-200 text-gray-700 dark:border-gray-700 dark:text-gray-200'
+                    key={sizeInfo.size || idx}
+                    disabled={!sizeInfo.isAvailable}
+                    className={`relative rounded-lg border px-3 py-1 text-sm font-bold transition-all ${
+                      !sizeInfo.isAvailable
+                        ? 'cursor-not-allowed border-gray-300 bg-gray-100 text-gray-400 line-through opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-500'
+                        : watchedSize === sizeInfo.size
+                          ? 'border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-900/40 dark:text-blue-200'
+                          : 'border-gray-200 text-gray-700 hover:border-gray-300 dark:border-gray-700 dark:text-gray-200'
                     }`}
-                    onClick={() => handleSizeSelect(size)}
+                    onClick={() => handleSizeSelect(sizeInfo)}
                   >
-                    {size}
+                    {sizeInfo.size}
+                    {!sizeInfo.isAvailable && (
+                      <span className='absolute -right-1 -top-1 text-xs font-bold text-red-500'>
+                        ✕
+                      </span>
+                    )}
                   </button>
                 ))}
               </div>
@@ -517,7 +648,18 @@ const ProductModal = memo(function ProductModal({
               <div className='flex items-center justify-end gap-2'>
                 <button
                   type='button'
-                  className='flex h-8 w-8 items-center justify-center rounded-full border border-gray-300 bg-gray-100 text-xl font-bold text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200'
+                  disabled={
+                    !isCurrentCombinationAvailable ||
+                    maxQty === 0 ||
+                    watchedQuantity <= 1
+                  }
+                  className={`flex h-8 w-8 items-center justify-center rounded-full border border-gray-300 bg-gray-100 text-xl font-bold text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 ${
+                    !isCurrentCombinationAvailable ||
+                    maxQty === 0 ||
+                    watchedQuantity <= 1
+                      ? 'cursor-not-allowed opacity-50'
+                      : ''
+                  }`}
                   onClick={() => handleQuantityChange(watchedQuantity - 1)}
                 >
                   -
@@ -530,19 +672,35 @@ const ProductModal = memo(function ProductModal({
                       message: 'الكمية يجب أن تكون 1 على الأقل',
                     },
                     max: {
-                      value: maxQty,
-                      message: `الكمية لا يمكن أن تتجاوز ${maxQty}`,
+                      value: maxQty || 1,
+                      message: `الكمية لا يمكن أن تتجاوز ${maxQty || 0}`,
                     },
                     valueAsNumber: true,
                   })}
                   type='text'
                   min={1}
-                  max={maxQty}
-                  className='w-16 rounded-lg border border-gray-400 bg-white px-2 py-1 text-center font-Lato text-[15px] text-gray-700 shadow-sm transition-all focus:ring-2 focus:ring-blue-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:ring-blue-800'
+                  max={maxQty || 1}
+                  disabled={!isCurrentCombinationAvailable || maxQty === 0}
+                  className={`w-16 rounded-lg border border-gray-400 bg-white px-2 py-1 text-center font-Lato text-[15px] text-gray-700 shadow-sm transition-all focus:ring-2 focus:ring-blue-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:ring-blue-800 ${
+                    !isCurrentCombinationAvailable || maxQty === 0
+                      ? 'cursor-not-allowed opacity-50'
+                      : ''
+                  }`}
                 />
                 <button
                   type='button'
-                  className='flex h-8 w-8 items-center justify-center rounded-full border border-gray-300 bg-gray-100 text-xl font-bold text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200'
+                  disabled={
+                    !isCurrentCombinationAvailable ||
+                    maxQty === 0 ||
+                    watchedQuantity >= maxQty
+                  }
+                  className={`flex h-8 w-8 items-center justify-center rounded-full border border-gray-300 bg-gray-100 text-xl font-bold text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 ${
+                    !isCurrentCombinationAvailable ||
+                    maxQty === 0 ||
+                    watchedQuantity >= maxQty
+                      ? 'cursor-not-allowed opacity-50'
+                      : ''
+                  }`}
                   onClick={() => handleQuantityChange(watchedQuantity + 1)}
                 >
                   +
@@ -568,9 +726,16 @@ const ProductModal = memo(function ProductModal({
               </button>
               <button
                 type='submit'
-                className='flex min-h-[44px] w-1/2 items-center justify-center gap-2 rounded-lg bg-blue-600 p-1 text-sm font-bold text-white shadow-md transition-all duration-200 hover:bg-blue-700 hover:shadow-lg'
+                disabled={!isCurrentCombinationAvailable || maxQty === 0}
+                className={`flex min-h-[44px] w-1/2 items-center justify-center gap-2 rounded-lg p-1 text-sm font-bold text-white shadow-md transition-all duration-200 ${
+                  !isCurrentCombinationAvailable || maxQty === 0
+                    ? 'cursor-not-allowed bg-gray-400'
+                    : 'bg-blue-600 hover:bg-blue-700 hover:shadow-lg'
+                }`}
               >
-                أضف الى السلة
+                {!isCurrentCombinationAvailable || maxQty === 0
+                  ? 'غير متوفر'
+                  : 'أضف الى السلة'}
               </button>
             </div>
           </form>

@@ -9,10 +9,18 @@ export default function Footer() {
       <Column className='items-center gap-4'>
         <img className='w-56' src='/LogoTwo.svg' alt='' />
         <Row>
-          <FaFacebook className='h-8 w-8 cursor-pointer text-white transition-all duration-200 hover:scale-110 hover:text-blue-500' />
-          <FaInstagram className='h-8 w-8 cursor-pointer text-white transition-all duration-200 hover:scale-110 hover:text-pink-500' />
-          <FaTiktok className='h-8 w-8 cursor-pointer text-white transition-all duration-200 hover:scale-110 hover:text-white' />
-          <FaWhatsapp className='h-8 w-8 cursor-pointer text-white transition-all duration-200 hover:scale-110 hover:text-green-500' />
+          <a href='https://www.facebook.com/share/1BC3Z1JZgS/'>
+            <FaFacebook className='h-8 w-8 cursor-pointer text-white transition-all duration-200 hover:scale-110 hover:text-blue-500' />
+          </a>
+          <a href='https://www.instagram.com/rabbit.clothes1?igsh=NjRjdmdhM3kzcGpz'>
+            <FaInstagram className='h-8 w-8 cursor-pointer text-white transition-all duration-200 hover:scale-110 hover:text-pink-500' />
+          </a>
+          <a href='https://www.tiktok.com/@rabbit.clothes1?_t=ZS-8zViEph8si1&_r=1'>
+            <FaTiktok className='h-8 w-8 cursor-pointer text-white transition-all duration-200 hover:scale-110 hover:text-white' />
+          </a>
+          <a href='https://wa.me/message/BIWJZGQJHQVOJ1'>
+            <FaWhatsapp className='h-8 w-8 cursor-pointer text-white transition-all duration-200 hover:scale-110 hover:text-green-500' />
+          </a>
         </Row>
 
         <Row

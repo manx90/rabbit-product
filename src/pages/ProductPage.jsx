@@ -1,5 +1,14 @@
+/* eslint-disable comma-dangle */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-irregular-whitespace */
+/* eslint-disable react/prop-types */
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable react/no-unknown-property */
+/* eslint-disable jsx-quotes */
+/* eslint-disable tailwindcss/enforces-shorthand */
 import { ProductSlider } from '@/components/ProductSlider';
 import { useToastContext } from '@/components/ui/toast';
+import WhatsAppButton from '@/components/whatsApp';
 import { useCart } from '@/hooks/useCartRedux';
 import { useCategoryProducts } from '@/hooks/useCategoryProducts';
 import { useProductPage } from '@/hooks/useProductPageRedux';
@@ -7,7 +16,6 @@ import { Column, Row } from '@/lib/css/Product';
 import { useEffect, useRef, useState } from 'react';
 import { MdAddShoppingCart } from 'react-icons/md';
 import { RxSize } from 'react-icons/rx';
-
 export default function ProductPage() {
   const {
     product,
@@ -132,7 +140,8 @@ export default function ProductPage() {
         />
       </div>
       <LikeProduct product={product} />
-      {/* <VideoDraggable /> */}
+      <WhatsAppButton product={product} />
+      <VideoDraggable link={product.videoLink} />
     </div>
   );
 }
@@ -245,7 +254,7 @@ function Photos({ product, selectedColor }) {
         onMouseDown={(e) => e.preventDefault()}
       >
         <img
-          src={currentImage}
+          src={`${import.meta.env.VITE_RABBIT_PI_BASE_URL}/uploads/${currentImage}`}
           alt={`${product.name} - صورة ${currentImageIndex + 1}`}
           className='h-full w-full object-contain p-4 transition-all duration-300'
         />
@@ -562,7 +571,8 @@ function Description({
                             aria-label={color.name}
                           />
                           <img
-                            src={color.imgColor}
+                            src={`${import.meta.env.VITE_RABBIT_PI_BASE_URL}/uploads/${color.imgColor}`}
+                            // src={color.imgColor}
                             alt={color.name}
                             className='h-full w-full rounded-md object-cover'
                           />
@@ -770,6 +780,43 @@ function LikeProduct({ product }) {
     error: productsError,
   } = useCategoryProducts(product.category.id, product.subCategory.id, limit);
 
+  // Fix image URLs to prevent duplication
+  const fixedProducts = products.map((product) => {
+    // Fix imgCover if it contains duplicated base URL
+    let fixedImgCover = product.imgCover;
+    if (
+      typeof fixedImgCover === 'string' &&
+      fixedImgCover.startsWith(
+        `${import.meta.env.VITE_RABBIT_PI_BASE_URL}/uploads`
+      )
+    ) {
+      fixedImgCover = fixedImgCover.replace(
+        `${import.meta.env.VITE_RABBIT_PI_BASE_URL}/uploads`,
+        ''
+      );
+    }
+
+    // Fix colors imgColor URLs as well
+    const fixedColors =
+      product.colors?.map((color) => ({
+        ...color,
+        imgColor: color.imgColor?.startsWith(
+          `${import.meta.env.VITE_RABBIT_PI_BASE_URL}/uploads`
+        )
+          ? color.imgColor.replace(
+              `${import.meta.env.VITE_RABBIT_PI_BASE_URL}/uploads`,
+              ''
+            )
+          : color.imgColor,
+      })) || [];
+
+    return {
+      ...product,
+      imgCover: fixedImgCover,
+      colors: fixedColors,
+    };
+  });
+
   return (
     <Column className='mr-4'>
       <span
@@ -779,7 +826,7 @@ function LikeProduct({ product }) {
         المنتجات المشابهة
       </span>
       <ProductSlider
-        products={products}
+        products={fixedProducts}
         subCategoryId={product.subCategory.id}
         categoryId={product.category.id}
         likeProduct={true}
@@ -855,158 +902,153 @@ function Dimensions({ product, openDimensions = true, setOpenDimensions }) {
   );
 }
 
-// function VideoDraggable() {
-//   const [position, setPosition] = useState({
-//     x: 0,
-//     y: 96,
-//   });
-//   const [isDragging, setIsDragging] = useState(false);
-//   const [dragStart, setDragStart] = useState({
-//     x: 0,
-//     y: 0,
-//   });
-//   const [isVisible, setIsVisible] = useState(true);
+function VideoDraggable({
+  link = 'https://www.youtube.com/embed/gyMwXuJrbJQ',
+}) {
+  if (link === null) {
+    return;
+  }
+  const [position, setPosition] = useState({ x: 0, y: 96 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [isVisible, setIsVisible] = useState(true);
 
-//   const handleMouseDown = (e) => {
-//     e.preventDefault();
-//     e.stopPropagation();
-//     setIsDragging(true);
-//     setDragStart({
-//       x: e.clientX - position.x,
-//       y: e.clientY - position.y,
-//     });
-//     // Prevent page scrolling while dragging
-//     document.body.style.overflow = 'hidden';
-//   };
+  const handleMouseDown = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+    setDragStart({
+      x: e.clientX - position.x,
+      y: e.clientY - position.y,
+    });
+    document.body.style.overflow = 'hidden';
+  };
 
-//   const handleMouseMove = (e) => {
-//     if (!isDragging) return;
-//     e.preventDefault();
-//     e.stopPropagation();
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    e.stopPropagation();
+    setPosition({
+      x: e.clientX - dragStart.x,
+      y: e.clientY - dragStart.y,
+    });
+  };
 
-//     setPosition({
-//       x: e.clientX - dragStart.x,
-//       y: e.clientY - dragStart.y,
-//     });
-//   };
+  const handleMouseUp = () => {
+    setIsDragging(false);
+    document.body.style.overflow = '';
+  };
 
-//   const handleMouseUp = () => {
-//     setIsDragging(false);
-//     // Restore page scrolling
-//     document.body.style.overflow = '';
-//   };
+  const handleTouchStart = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const touch = e.touches[0];
+    setIsDragging(true);
+    setDragStart({
+      x: touch.clientX - position.x,
+      y: touch.clientY - position.y,
+    });
+    document.body.style.overflow = 'hidden';
+  };
 
-//   const handleTouchStart = (e) => {
-//     e.preventDefault();
-//     e.stopPropagation();
-//     const touch = e.touches[0];
-//     setIsDragging(true);
-//     setDragStart({
-//       x: touch.clientX - position.x,
-//       y: touch.clientY - position.y,
-//     });
-//     // Prevent page scrolling while dragging
-//     document.body.style.overflow = 'hidden';
-//   };
+  const handleTouchMove = (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const touch = e.touches[0];
+    setPosition({
+      x: touch.clientX - dragStart.x,
+      y: touch.clientY - dragStart.y,
+    });
+  };
 
-//   const handleTouchMove = (e) => {
-//     if (!isDragging) return;
-//     e.preventDefault();
-//     e.stopPropagation();
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+    document.body.style.overflow = '';
+  };
 
-//     const touch = e.touches[0];
-//     setPosition({
-//       x: touch.clientX - dragStart.x,
-//       y: touch.clientY - dragStart.y,
-//     });
-//   };
+  const handleClose = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsVisible(false);
+  };
 
-//   const handleTouchEnd = () => {
-//     setIsDragging(false);
-//     // Restore page scrolling
-//     document.body.style.overflow = '';
-//   };
+  useEffect(() => {
+    if (isDragging) {
+      document.addEventListener('mousemove', handleMouseMove, {
+        passive: false,
+      });
+      document.addEventListener('mouseup', handleMouseUp);
+      document.addEventListener('touchmove', handleTouchMove, {
+        passive: false,
+      });
+      document.addEventListener('touchend', handleTouchEnd);
+    }
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('touchend', handleTouchEnd);
+      document.body.style.overflow = '';
+    };
+  }, [isDragging, dragStart]);
 
-//   const handleClose = (e) => {
-//     e.preventDefault();
-//     e.stopPropagation();
-//     setIsVisible(false);
-//   };
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
 
-//   useEffect(() => {
-//     if (isDragging) {
-//       document.addEventListener('mousemove', handleMouseMove, {
-//         passive: false,
-//       });
-//       document.addEventListener('mouseup', handleMouseUp);
-//       document.addEventListener('touchmove', handleTouchMove, {
-//         passive: false,
-//       });
-//       document.addEventListener('touchend', handleTouchEnd);
-//     }
+  if (!isVisible) return null;
 
-//     return () => {
-//       document.removeEventListener('mousemove', handleMouseMove);
-//       document.removeEventListener('mouseup', handleMouseUp);
-//       document.removeEventListener('touchmove', handleTouchMove);
-//       document.removeEventListener('touchend', handleTouchEnd);
-//       // Ensure overflow is restored when component unmounts
-//       document.body.style.overflow = '';
-//     };
-//   }, [isDragging, dragStart]);
+  return (
+    <div
+      className={`fixed z-50 h-auto w-auto cursor-move select-none rounded-lg ${
+        isDragging ? 'opacity-80' : ''
+      }`}
+      style={{
+        left: `${position.x}px`,
+        top: `${position.y}px`,
+        transform: isDragging ? 'scale(1.05)' : 'scale(1)',
+        transition: isDragging ? 'none' : 'transform 0.2s ease',
+        touchAction: 'none',
+      }}
+      onMouseDown={handleMouseDown}
+      onTouchStart={handleTouchStart}
+    >
+      {/* Close button */}
+      <button
+        onClick={handleClose}
+        className='absolute -right-2 -top-2 z-10 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-white shadow-md hover:bg-gray-100'
+      >
+        <svg
+          className='h-4 w-4 text-gray-600'
+          fill='none'
+          stroke='currentColor'
+          viewBox='0 0 24 24'
+        >
+          <path
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            strokeWidth={2}
+            d='M6 18L18 6M6 6l12 12'
+          />
+        </svg>
+      </button>
 
-//   // Clean up on unmount
-//   useEffect(() => {
-//     return () => {
-//       document.body.style.overflow = '';
-//     };
-//   }, []);
-
-//   if (!isVisible) return null;
-
-//   return (
-//     <div
-//       className={`fixed z-50 h-auto w-auto cursor-move select-none rounded-lg bg-red-500 ${
-//         isDragging ? 'opacity-80' : ''
-//       }`}
-//       style={{
-//         left: `${position.x}px`,
-//         top: `${position.y}px`,
-//         transform: isDragging ? 'scale(1.05)' : 'scale(1)',
-//         transition: isDragging ? 'none' : 'transform 0.2s ease',
-//         touchAction: 'none', // Prevent touch gestures
-//       }}
-//       onMouseDown={handleMouseDown}
-//       onTouchStart={handleTouchStart}
-//     >
-//       {/* Close button */}
-//       <button
-//         onClick={handleClose}
-//         className='absolute -right-2 -top-2 z-10 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-white shadow-md hover:bg-gray-100'
-//       >
-//         <svg
-//           className='h-4 w-4 text-gray-600'
-//           fill='none'
-//           stroke='currentColor'
-//           viewBox='0 0 24 24'
-//         >
-//           <path
-//             strokeLinecap='round'
-//             strokeLinejoin='round'
-//             strokeWidth={2}
-//             d='M6 18L18 6M6 6l12 12'
-//           />
-//         </svg>
-//       </button>
-
-//       <video
-//         src='/video.mp4'
-//         autoPlay
-//         loop
-//         muted
-//         playsInline
-//         className='w-30 h-40 rounded-lg object-contain'
-//       />
-//     </div>
-//   );
-// }
+      {/* YouTube video */}
+      <div
+        className='relative h-40 w-28 overflow-hidden rounded-lg'
+        style={{ pointerEvents: 'none' }}
+      >
+        <iframe
+          className='absolute left-0 top-0 h-40 w-28'
+          src={`${link}?autoplay=1&mute=1&loop=1&modestbranding=1&rel=0&iv_load_policy=3&playsinline=1`}
+          title='YouTube video'
+          allow='autoplay; encrypted-media'
+          muted
+        ></iframe>
+      </div>
+    </div>
+  );
+}

@@ -19,12 +19,11 @@ Category.defaultProps = {
 };
 
 function CategoryHeader({ idCat, idSub, name, all }) {
+  const linkTo = idSub ? `/category/${idCat}/${idSub}` : `/category/${idCat}`;
+
   return (
     <div className='flex items-center justify-between px-[12px] py-[8px]'>
-      <Link
-        to={`/category/${idCat}/${idSub}`}
-        className='flex items-center gap-[4px]'
-      >
+      <Link to={linkTo} className='flex items-center gap-[4px]'>
         <svg
           xmlns='http://www.w3.org/2000/svg'
           width='18'
