@@ -40,7 +40,7 @@ export const ProductSlider = memo(function ProductSlider({
       {!likeProduct && (
         <ProductStyled
           onClick={() => {
-            navigate(`/category/${categoryId}/${subCategoryId}`);
+            navigate(`/category/${categoryId}`);
           }}
           className='group flex min-w-[160px] cursor-pointer flex-row border-2 border-blue-500 hover:border-blue-500 dark:hover:border-blue-500'
         >
