@@ -1,8 +1,8 @@
-import { Product } from '@/components/ProductSlider';
+import { Product } from '@/components/Product';
 import { useCategoryProducts } from '@/hooks/useCategoryProducts';
 import { useSubcategories } from '@/hooks/useSubcategories';
 import { Link, useParams } from 'react-router-dom';
-import { Announcement } from './Home';
+// import { Announcement } from './Home';
 
 export default function CategoryPage() {
   const { categoryId, subcategoryId } = useParams();
