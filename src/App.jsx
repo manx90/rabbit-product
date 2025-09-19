@@ -1,11 +1,9 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { lazy, Suspense } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Loading from './components/Loading';
 import ScrollToTop from './components/ScrollToTop';
-import { DynamicMetaTags } from './components/DynamicMetaTags';
 import Home from './pages/Home';
 import Layout from './pages/Layout';
 import { store } from './store/store';
@@ -26,7 +24,6 @@ function App() {
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
-          <DynamicMetaTags />
           <ScrollToTop />
           <Suspense fallback={<Loading />}>
             <Layout>
