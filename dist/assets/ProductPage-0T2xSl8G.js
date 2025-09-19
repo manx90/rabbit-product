@@ -1,4 +1,4 @@
-import{j as e,J,e as _,f as M,r as j,H as O,K as G,M as H}from"./vendor-CUEbPlo7.js";import{s as K,a as Z,b as ee,r as te,i as se,h as W,c as q,d as B,e as X,u as ae,f as D,R as F,g as re}from"./index-C7X3EoBJ.js";import{u as ne}from"./ui-components-COOuEkzG.js";import{a as oe,u as ie}from"./useCategoryProducts-SLKhJA_q.js";import{c as le,a as ce}from"./router-CHW3atcw.js";import"./utils-Dpy6SecU.js";import"./forms-C74EBmA-.js";const de=({product:t})=>{const r=`مرحباً!
+import{j as e,J,e as _,f as M,r as j,H as O,K as G,M as H}from"./vendor-CUEbPlo7.js";import{s as K,a as Z,b as ee,r as te,i as se,h as W,c as q,d as B,e as X,u as ae,f as D,R as F,g as re}from"./index-DWOFxk-B.js";import{u as ne}from"./ui-components-COOuEkzG.js";import{a as oe,u as ie}from"./useCategoryProducts-DOmCfA9h.js";import{c as le,a as ce}from"./router-CHW3atcw.js";import"./utils-Dpy6SecU.js";import"./forms-C74EBmA-.js";const de=({product:t})=>{const r=`مرحباً!
 
 أرغب بالحصول على مزيد من التفاصيل حول هذا المنتج:
 
