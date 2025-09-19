@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
-import React, { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 
 const ToastContext = createContext(null);
 export const useToastContext = () => {
@@ -21,7 +21,7 @@ export function ToastProvider({ children }) {
   return (
     <ToastContext.Provider value={{ addToast }}>
       {children}
-      <div className='fixed right-4 bottom-4 z-50 space-y-2'>
+      <div className='fixed bottom-4 right-4 z-50 space-y-2'>
         {toasts.map((t) => (
           <div
             key={t.id}

@@ -10,7 +10,22 @@ import { defineConfig } from 'vite';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
-  plugins: [react(), visualizer()],
+  plugins: [
+    react({
+      jsxRuntime: 'automatic',
+      jsxImportSource: 'react',
+    }),
+    visualizer(),
+  ],
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-icons/md'],
+    force: true,
+  },
+  define: {
+    'process.env.NODE_ENV': JSON.stringify(
+      process.env.NODE_ENV || 'production'
+    ),
+  },
   css: {
     plugins: [tailwindcss()],
   },
@@ -30,13 +45,8 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: (id) => {
-          // React and React DOM
-          if (id.includes('react-dom')) {
-            return 'react-dom';
-          }
-          if (id.includes('react/') || id.includes('react\\')) {
-            return 'react';
-          }
+          // Keep React in the main bundle to avoid context issues
+          // Don't split React-related modules
 
           // Router
           if (id.includes('react-router')) {
@@ -48,10 +58,10 @@ export default defineConfig({
             return 'forms';
           }
 
-          // Icons
-          if (id.includes('react-icons')) {
-            return 'icons';
-          }
+          // Icons - temporarily disabled to fix build issue
+          // if (id.includes('react-icons')) {
+          //   return 'icons';
+          // }
 
           // Utils
           if (id.includes('tailwind-merge') || id.includes('clsx')) {
