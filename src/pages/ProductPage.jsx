@@ -14,7 +14,6 @@ import { useCategoryProducts } from '@/hooks/useCategoryProducts';
 import { useProductPage } from '@/hooks/useProductPageRedux';
 import { Column, Row } from '@/lib/css/Product';
 import { useEffect, useRef, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { MdAddShoppingCart } from 'react-icons/md';
 import { RxSize } from 'react-icons/rx';
 export default function ProductPage() {
@@ -124,77 +123,8 @@ export default function ProductPage() {
     return null;
   }
 
-  // Generate dynamic meta tags for the product
-  const productTitle = product?.name || 'منتج';
-  const productDescription =
-    product?.description ||
-    `اكتشف ${productTitle} في متجر الأرانب. أفضل الأسعار والجودة المضمونة`;
-  const productPrice = product?.price || product?.sizeDetails?.[0]?.price || 0;
-  const productImage =
-    product?.imgCover || product?.colors?.[0]?.imgColor || 'product.png';
-  const productUrl = `${window.location.origin}/product/${product?.id}`;
-  const imageUrl = `${import.meta.env.VITE_RABBIT_PI_BASE_URL}/uploads/${productImage}`;
-
   return (
     <div>
-      <Helmet>
-        {/* Product page specific meta tags */}
-        <title>{productTitle} - Rabbit Store | متجر الأرانب</title>
-        <meta name='description' content={productDescription} />
-        <meta
-          name='keywords'
-          content={`${productTitle}, منتج, تسوق, متجر الأرانب, ${productPrice} جنيه`}
-        />
-
-        {/* Open Graph tags for product */}
-        <meta property='og:title' content={`${productTitle} - Rabbit Store`} />
-        <meta property='og:description' content={productDescription} />
-        <meta property='og:url' content={productUrl} />
-        <meta property='og:type' content='product' />
-        <meta property='og:image' content={imageUrl} />
-        <meta property='og:image:width' content='800' />
-        <meta property='og:image:height' content='800' />
-        <meta property='og:image:alt' content={productTitle} />
-        <meta property='product:price:amount' content={productPrice} />
-        <meta property='product:price:currency' content='EGP' />
-
-        {/* Twitter tags for product */}
-        <meta name='twitter:title' content={`${productTitle} - Rabbit Store`} />
-        <meta name='twitter:description' content={productDescription} />
-        <meta name='twitter:image' content={imageUrl} />
-        <meta name='twitter:image:alt' content={productTitle} />
-
-        {/* Structured data for product */}
-        <script type='application/ld+json'>
-          {JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'Product',
-            name: productTitle,
-            description: productDescription,
-            image: imageUrl,
-            url: productUrl,
-            brand: {
-              '@type': 'Brand',
-              name: 'Rabbit Store',
-            },
-            offers: {
-              '@type': 'Offer',
-              price: productPrice,
-              priceCurrency: 'EGP',
-              availability: 'https://schema.org/InStock',
-              seller: {
-                '@type': 'Organization',
-                name: 'Rabbit Store',
-              },
-            },
-            aggregateRating: {
-              '@type': 'AggregateRating',
-              ratingValue: '4.5',
-              reviewCount: '100',
-            },
-          })}
-        </script>
-      </Helmet>
       <div className='relative m-[16px] flex flex-col justify-center gap-2 lg:mt-16'>
         <Description
           MainImage={MainImage}

@@ -1,0 +1,5 @@
+# Netlify redirects for SPA
+/*    /index.html   200
+
+# Product page redirects with meta tags
+/product/*    /index.html   200

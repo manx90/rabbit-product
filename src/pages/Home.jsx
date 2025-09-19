@@ -2,7 +2,6 @@ import SecondaryHeader from '@/components/SeconderyHeader';
 import SideBar from '@/components/SideBar';
 import { useCollection } from '@/hooks/useCollection';
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import Category from '../components/category';
 import { ProductSlider } from '../components/ProductSlider';
 import { NoteScrolling } from '../components/NoteScrolling';
@@ -13,69 +12,6 @@ export default function Home() {
 
   return (
     <div className='mt-12 md:mt-0'>
-      <Helmet>
-        {/* Home page specific meta tags */}
-        <title>Rabbit Store - متجر الأرانب | الصفحة الرئيسية</title>
-        <meta
-          name='description'
-          content='اكتشف أفضل المنتجات في متجر الأرانب. تسوق الآن واحصل على أفضل العروض والأسعار المميزة'
-        />
-
-        {/* Open Graph tags for home page */}
-        <meta
-          property='og:title'
-          content='Rabbit Store - متجر الأرانب | الصفحة الرئيسية'
-        />
-        <meta
-          property='og:description'
-          content='اكتشف أفضل المنتجات في متجر الأرانب. تسوق الآن واحصل على أفضل العروض والأسعار المميزة'
-        />
-        <meta property='og:url' content={window.location.origin} />
-        <meta
-          property='og:image'
-          content={`${window.location.origin}/herosec.jpg`}
-        />
-        <meta property='og:image:width' content='1200' />
-        <meta property='og:image:height' content='630' />
-        <meta property='og:image:alt' content='Rabbit Store - متجر الأرانب' />
-
-        {/* Twitter tags for home page */}
-        <meta
-          name='twitter:title'
-          content='Rabbit Store - متجر الأرانب | الصفحة الرئيسية'
-        />
-        <meta
-          name='twitter:description'
-          content='اكتشف أفضل المنتجات في متجر الأرانب. تسوق الآن واحصل على أفضل العروض والأسعار المميزة'
-        />
-        <meta
-          name='twitter:image'
-          content={`${window.location.origin}/herosec.jpg`}
-        />
-        <meta name='twitter:image:alt' content='Rabbit Store - متجر الأرانب' />
-
-        {/* Structured data for home page */}
-        <script type='application/ld+json'>
-          {JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'WebSite',
-            name: 'Rabbit Store',
-            alternateName: 'متجر الأرانب',
-            url: window.location.origin,
-            description:
-              'اكتشف أفضل المنتجات في متجر الأرانب. تسوق الآن واحصل على أفضل العروض والأسعار المميزة',
-            inLanguage: 'ar',
-            potentialAction: {
-              '@type': 'SearchAction',
-              target: {
-                '@type': 'EntryPoint',
-                urlTemplate: `${window.location.origin}/search?q={search_term_string}`,
-              },
-              'query-input': 'required name=search_term_string',
-            },
-          })}
-        </script>
-      </Helmet>
       <SecondaryHeader />
       {!Menubar && (
         <>

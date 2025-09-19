@@ -1,7 +1,6 @@
 import { Product } from '@/components/Product';
 import { useCategoryProducts } from '@/hooks/useCategoryProducts';
 import { useSubcategories } from '@/hooks/useSubcategories';
-import { Helmet } from 'react-helmet-async';
 import { Link, useParams } from 'react-router-dom';
 // import { Announcement } from './Home';
 
@@ -25,44 +24,8 @@ export default function CategoryPage() {
   const isLoading = subcategoriesLoading || productsLoading;
   const error = subcategoriesError || productsError;
 
-  // Generate category-specific meta tags
-  const categoryName =
-    subcategories.find((sub) => sub.id === subcategoryId)?.name ||
-    subcategories[0]?.name ||
-    `الفئة ${categoryId}`;
-  const categoryTitle = `${categoryName} - Rabbit Store | متجر الأرانب`;
-  const categoryDescription = `اكتشف أفضل منتجات ${categoryName} في متجر الأرانب. مجموعة واسعة من المنتجات بأسعار مميزة`;
-  const categoryUrl = `${window.location.origin}/category/${categoryId}${subcategoryId ? `/${subcategoryId}` : ''}`;
-
   return (
     <>
-      <Helmet>
-        {/* Category page specific meta tags */}
-        <title>{categoryTitle}</title>
-        <meta name='description' content={categoryDescription} />
-        <meta
-          name='keywords'
-          content={`${categoryName}, منتجات, تسوق, متجر الأرانب, فئة`}
-        />
-
-        {/* Open Graph tags for category */}
-        <meta property='og:title' content={categoryTitle} />
-        <meta property='og:description' content={categoryDescription} />
-        <meta property='og:url' content={categoryUrl} />
-        <meta property='og:type' content='website' />
-        <meta
-          property='og:image'
-          content={`${window.location.origin}/herosec.jpg`}
-        />
-
-        {/* Twitter tags for category */}
-        <meta name='twitter:title' content={categoryTitle} />
-        <meta name='twitter:description' content={categoryDescription} />
-        <meta
-          name='twitter:image'
-          content={`${window.location.origin}/herosec.jpg`}
-        />
-      </Helmet>
       {/* <Announcement /> */}
 
       <div className='mt-[45px] md:mt-0 lg:mx-24'>
